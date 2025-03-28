@@ -71,10 +71,10 @@ const Header = () => {
           </Form>
 
           {/* Các icon điều hướng */}
-          <Nav className="d-flex align-items-center gap-4">
+          <Nav className="d-flex align-items-center gap-4 flex-row">
             <Nav.Link
               href="#login"
-              className="text-white d-flex align-items-center gap-2"
+              className="text-white d-flex align-items-center gap-2 text-nowrap"
             >
               <div
                 className="border border-light rounded-circle d-flex align-items-center justify-content-center"
@@ -89,7 +89,7 @@ const Header = () => {
             </Nav.Link>
             <Nav.Link
               href="#store"
-              className="text-white d-flex align-items-center gap-2"
+              className="text-white d-flex align-items-center gap-2 text-nowrap"
             >
               <div
                 className="border border-light rounded-circle d-flex align-items-center justify-content-center"
@@ -104,7 +104,7 @@ const Header = () => {
             </Nav.Link>
             <Nav.Link
               href="#support"
-              className="text-white d-flex align-items-center gap-2"
+              className="text-white d-flex align-items-center gap-2 text-nowrap"
             >
               <div
                 className="border border-light rounded-circle d-flex align-items-center justify-content-center"
@@ -119,7 +119,7 @@ const Header = () => {
             </Nav.Link>
             <Nav.Link
               href="#cart"
-              className="text-white d-flex align-items-center gap-2 position-relative"
+              className="text-white d-flex align-items-center gap-2 text-nowrap position-relative"
             >
               <div
                 className="border border-light rounded-circle d-flex align-items-center justify-content-center"

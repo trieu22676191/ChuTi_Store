@@ -4,6 +4,7 @@ import { FaFacebook } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa";
 import { checkLogin } from "../data/Account";
 import Repass from "./Repass";
+import { useNavigate } from "react-router-dom";
 
 const Login = ({
   show,
@@ -12,12 +13,13 @@ const Login = ({
   onLoginSuccess,
   onForgotPassword,
 }) => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    identifier: "",
+    emailOrPhone: "",
     password: "",
   });
   const [error, setError] = useState({
-    identifier: "",
+    emailOrPhone: "",
     password: "",
     general: "",
   });
@@ -57,40 +59,51 @@ const Login = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setError("");
 
-    // Kiểm tra định dạng email hoặc số điện thoại
-    const identifierError = validateIdentifier(formData.identifier);
-    if (identifierError) {
-      setError({
-        ...error,
-        identifier: identifierError,
-      });
-      return;
-    }
+    try {
+      const accounts = JSON.parse(localStorage.getItem("accounts")) || [];
+      const account = accounts.find(
+        (acc) =>
+          (acc.email === formData.emailOrPhone ||
+            acc.phone === formData.emailOrPhone) &&
+          acc.password === formData.password
+      );
 
-    // Kiểm tra mật khẩu
-    if (!formData.password) {
-      setError({
-        ...error,
-        password: "Vui lòng nhập mật khẩu",
-      });
-      return;
-    }
+      if (account) {
+        // Kiểm tra và thêm các trường ngày tháng năm nếu chưa có
+        const updatedAccount = {
+          ...account,
+          birthDay: account.birthDay || "",
+          birthMonth: account.birthMonth || "",
+          birthYear: account.birthYear || "",
+          fullName: account.fullName || "",
+          gender: account.gender || "",
+          marketing: account.marketing || false,
+          avatar: account.avatar || null,
+        };
 
-    // Kiểm tra đăng nhập
-    const loggedInUser = checkLogin(formData.identifier, formData.password);
-    if (loggedInUser) {
-      setSuccess("Đăng nhập thành công!");
-      // Truyền thông tin người dùng lên component cha
-      onLoginSuccess(loggedInUser);
-      setTimeout(() => {
+        // Cập nhật lại account trong mảng accounts
+        const updatedAccounts = accounts.map((acc) => {
+          if (acc.email === account.email || acc.phone === account.phone) {
+            return updatedAccount;
+          }
+          return acc;
+        });
+
+        // Lưu lại vào localStorage
+        localStorage.setItem("accounts", JSON.stringify(updatedAccounts));
+        localStorage.setItem("loggedInUser", JSON.stringify(updatedAccount));
+
+        // Gọi callback để cập nhật header
+        onLoginSuccess && onLoginSuccess(updatedAccount);
         handleClose();
-      }, 1000);
-    } else {
-      setError({
-        ...error,
-        general: "Email/Số điện thoại hoặc mật khẩu không đúng!",
-      });
+      } else {
+        setError("Email/Số điện thoại hoặc mật khẩu không đúng");
+      }
+    } catch (error) {
+      console.error("Lỗi đăng nhập:", error);
+      setError("Có lỗi xảy ra khi đăng nhập");
     }
   };
 
@@ -156,18 +169,18 @@ const Login = ({
 
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3">
-              {error.identifier && (
+              {error.emailOrPhone && (
                 <Form.Text className="text-danger mb-1 d-block">
-                  {error.identifier}
+                  {error.emailOrPhone}
                 </Form.Text>
               )}
               <Form.Control
                 type="text"
-                placeholder="Nhập email hoặc số điện thoại"
-                name="identifier"
-                value={formData.identifier}
+                placeholder="Email hoặc số điện thoại"
+                name="emailOrPhone"
+                value={formData.emailOrPhone}
                 onChange={handleChange}
-                isInvalid={!!error.identifier}
+                required
               />
             </Form.Group>
 
@@ -179,11 +192,11 @@ const Login = ({
               )}
               <Form.Control
                 type="password"
-                placeholder="Nhập password"
+                placeholder="Mật khẩu"
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                isInvalid={!!error.password}
+                required
               />
             </Form.Group>
 

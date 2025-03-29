@@ -3,7 +3,7 @@ import { Modal, Form, Button, Alert } from "react-bootstrap";
 import { FaFacebook, FaGoogle } from "react-icons/fa";
 import { addAccount } from "../data/Account";
 
-const Signup = ({ show, handleClose }) => {
+const Signup = ({ show, handleClose, handleShowLogin }) => {
   const [formData, setFormData] = useState({
     email: "",
     phone: "",
@@ -135,46 +135,53 @@ const Signup = ({ show, handleClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (isFormValid) {
-      // Tạo object chứa thông tin tài khoản mới
-      const newAccount = {
-        email: formData.email,
-        phone: formData.phone,
-        password: formData.password,
-        fullName: formData.fullName,
-        gender: formData.gender,
-        birthDate: {
-          day: formData.birthDate.day,
-          month: formData.birthDate.month,
-          year: formData.birthDate.year,
-        },
-      };
 
-      // Thêm tài khoản mới vào danh sách
-      addAccount(newAccount);
+    const newAccount = {
+      email: formData.email,
+      phone: formData.phone,
+      password: formData.password,
+      fullName: formData.fullName,
+      gender: formData.gender,
+      // Lưu trực tiếp ngày tháng năm
+      birthDay: formData.birthDate.day,
+      birthMonth: formData.birthDate.month,
+      birthYear: formData.birthDate.year,
+      agreements: formData.agreements,
+    };
 
-      // Hiển thị thông báo thành công
-      alert("Đăng ký thành công!");
+    // Lưu vào accounts
+    const accounts = JSON.parse(localStorage.getItem("accounts")) || [];
+    accounts.push(newAccount);
+    localStorage.setItem("accounts", JSON.stringify(accounts));
 
-      // Reset form và đóng modal
-      setFormData({
-        email: "",
-        phone: "",
-        password: "",
-        fullName: "",
-        gender: "",
-        birthDate: {
-          day: "",
-          month: "",
-          year: "",
-        },
-        agreements: {
-          terms: false,
-          privacy: false,
-        },
-      });
-      handleClose();
-    }
+    // Hiển thị thông báo thành công
+    alert("Đăng ký thành công!");
+
+    // Reset form và đóng modal
+    setFormData({
+      email: "",
+      phone: "",
+      password: "",
+      fullName: "",
+      gender: "",
+      birthDate: {
+        day: "",
+        month: "",
+        year: "",
+      },
+      agreements: {
+        terms: false,
+        privacy: false,
+      },
+    });
+    handleClose();
+  };
+
+  // Thêm hàm xử lý chuyển đổi modal
+  const switchToLogin = (e) => {
+    e.preventDefault();
+    handleClose(); // Đóng modal signup
+    handleShowLogin(); // Mở modal login
   };
 
   return (
@@ -369,7 +376,11 @@ const Signup = ({ show, handleClose }) => {
 
           <div className="text-center mb-3">
             <span>Bạn đã có tài khoản? </span>
-            <a href="#" className="text-decoration-none text-success">
+            <a
+              href="#"
+              className="text-decoration-none text-success"
+              onClick={switchToLogin}
+            >
               ĐĂNG NHẬP NGAY
             </a>
           </div>

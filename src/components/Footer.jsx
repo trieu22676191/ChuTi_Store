@@ -8,6 +8,7 @@ import {
   FaRegCalendar,
 } from "react-icons/fa";
 import storeImage from "../img/store.png";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -62,37 +63,27 @@ const Footer = () => {
                 className="text-white text-decoration-none"
                 style={{ ":hover": { textDecoration: "underline !important" } }}
               >
-                Chính sách giao hàng
+                Điều khoản sử dụng
               </a>
-              <a
-                href="#"
-                className="text-white text-decoration-none hover-underline"
+              <Link
+                to="/chinh-sach"
+                className="text-white text-decoration-none"
               >
                 Chính sách bảo mật
-              </a>
+              </Link>
+
               <a
                 href="#"
                 className="text-white text-decoration-none hover-underline"
               >
-                Chính sách bảo hành và đổi trả hàng hóa
+                Liên hệ
               </a>
+
               <a
                 href="#"
                 className="text-white text-decoration-none hover-underline"
               >
-                Chính sách bảo hành động hồ Imoo
-              </a>
-              <a
-                href="#"
-                className="text-white text-decoration-none hover-underline"
-              >
-                Chính sách thanh toán
-              </a>
-              <a
-                href="#"
-                className="text-white text-decoration-none hover-underline"
-              >
-                Điều kiện & Điều khoản thành viên
+                Giới thiệu về ChuTi
               </a>
             </div>
           </Col>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Navbar,
   Nav,
@@ -22,23 +22,46 @@ import {
 import logo from "../img/logo.png";
 import Login from "./Login";
 import Signup from "./Signup";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [showLogin, setShowLogin] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
-  const [loggedInUser, setLoggedInUser] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userData, setUserData] = useState(null);
+  const navigate = useNavigate();
 
   const handleShowLogin = () => setShowLogin(true);
   const handleCloseLogin = () => setShowLogin(false);
   const handleShowSignup = () => setShowSignup(true);
   const handleCloseSignup = () => setShowSignup(false);
 
-  const handleLoginSuccess = (user) => {
-    setLoggedInUser(user);
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("loggedInUser");
+    if (loggedInUser) {
+      setIsLoggedIn(true);
+      setUserData(JSON.parse(loggedInUser));
+    }
+  }, []);
+
+  const handleLoginSuccess = (account) => {
+    setIsLoggedIn(true);
+    setUserData(account);
   };
 
   const handleLogout = () => {
-    setLoggedInUser(null);
+    localStorage.removeItem("loggedInUser");
+    setIsLoggedIn(false);
+    setUserData(null);
+    navigate("/");
+  };
+
+  const handleAccountClick = () => {
+    if (!userData) {
+      handleShowLogin();
+      return;
+    }
+    navigate("/my-account");
   };
 
   return (
@@ -46,7 +69,8 @@ const Header = () => {
       <Navbar bg="success" variant="dark" expand="lg" className="py-2">
         <Container>
           <Navbar.Brand
-            href="#"
+            as={Link}
+            to="/"
             className="d-flex align-items-center ps-0"
             style={{ width: "12%" }}
           >
@@ -103,7 +127,7 @@ const Header = () => {
             </Form>
 
             <Nav className="d-flex align-items-center gap-3">
-              {loggedInUser ? (
+              {isLoggedIn ? (
                 <Dropdown>
                   <Dropdown.Toggle
                     variant="success"
@@ -116,24 +140,24 @@ const Header = () => {
                       <FaUser size={16} />
                     </div>
                     <span style={{ fontSize: "14px" }}>
-                      Chào {loggedInUser.fullName}
+                      Chào {userData.fullName}
                     </span>
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu>
-                    <Dropdown.Item href="#">
+                    <Dropdown.Item onClick={handleAccountClick}>
                       <FaUser className="me-2" />
                       Tài khoản của bạn
                     </Dropdown.Item>
-                    <Dropdown.Item href="#">
+                    <Dropdown.Item>
                       <FaClipboardList className="me-2" />
                       Quản lý đơn hàng
                     </Dropdown.Item>
-                    <Dropdown.Item href="#">
+                    <Dropdown.Item>
                       <FaHeart className="me-2" />
                       Sản phẩm yêu thích
                     </Dropdown.Item>
-                    <Dropdown.Item href="#">
+                    <Dropdown.Item>
                       <FaMapMarkerAlt className="me-2" />
                       Địa chỉ giao hàng
                     </Dropdown.Item>
@@ -213,11 +237,21 @@ const Header = () => {
       <Login
         show={showLogin}
         handleClose={handleCloseLogin}
-        handleShowSignup={handleShowSignup}
+        handleShowSignup={() => {
+          handleCloseLogin();
+          handleShowSignup();
+        }}
         onLoginSuccess={handleLoginSuccess}
       />
 
-      <Signup show={showSignup} handleClose={handleCloseSignup} />
+      <Signup
+        show={showSignup}
+        handleClose={handleCloseSignup}
+        handleShowLogin={() => {
+          handleCloseSignup();
+          handleShowLogin();
+        }}
+      />
     </>
   );
 };

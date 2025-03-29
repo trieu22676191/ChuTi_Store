@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Navbar,
   Nav,
@@ -7,6 +7,7 @@ import {
   Container,
   Button,
   Dropdown,
+  Image,
 } from "react-bootstrap";
 import {
   FaUser,
@@ -30,6 +31,7 @@ const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
+  const fileInputRef = useRef(null);
 
   const handleShowLogin = () => setShowLogin(true);
   const handleCloseLogin = () => setShowLogin(false);
@@ -62,6 +64,38 @@ const Header = () => {
       return;
     }
     navigate("/my-account");
+  };
+
+  const handleFileSelect = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        alert("Kích thước file không được vượt quá 5MB");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const newAvatar = e.target.result;
+
+        const accounts = JSON.parse(localStorage.getItem("accounts")) || [];
+        const updatedAccounts = accounts.map((acc) => {
+          if (acc.email === userData.email || acc.phone === userData.phone) {
+            return { ...acc, avatar: newAvatar };
+          }
+          return acc;
+        });
+
+        localStorage.setItem("accounts", JSON.stringify(updatedAccounts));
+        localStorage.setItem(
+          "loggedInUser",
+          JSON.stringify({ ...userData, avatar: newAvatar })
+        );
+
+        setUserData((prev) => ({ ...prev, avatar: newAvatar }));
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   return (
@@ -131,20 +165,93 @@ const Header = () => {
                 <Dropdown>
                   <Dropdown.Toggle
                     variant="success"
-                    className="d-flex align-items-center gap-2 border-0"
+                    id="dropdown-basic"
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "8px",
+                      padding: "8px 16px",
+                      height: "40px", // Cố định chiều cao
+                    }}
                   >
                     <div
-                      className="border border-light rounded-circle d-flex align-items-center justify-content-center"
-                      style={{ width: "35px", height: "35px" }}
+                      style={{
+                        width: "24px",
+                        height: "24px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
                     >
-                      <FaUser size={16} />
+                      {isLoggedIn && userData?.avatar ? (
+                        <Image
+                          src={userData.avatar}
+                          roundedCircle
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover",
+                          }}
+                        />
+                      ) : (
+                        <FaUser size={16} />
+                      )}
                     </div>
-                    <span style={{ fontSize: "14px" }}>
-                      Chào {userData.fullName}
+                    <span
+                      style={{
+                        lineHeight: "24px",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {isLoggedIn
+                        ? `${userData?.fullName || "bạn"}`
+                        : "Tài khoản"}
                     </span>
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu>
+                    <div className="px-3 py-2 text-center">
+                      <div
+                        style={{
+                          width: "80px",
+                          height: "80px",
+                          margin: "0 auto",
+                          position: "relative",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => fileInputRef.current.click()}
+                      >
+                        {userData?.avatar ? (
+                          <Image
+                            src={userData.avatar}
+                            roundedCircle
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                              objectFit: "cover",
+                            }}
+                          />
+                        ) : (
+                          <div
+                            className="bg-light rounded-circle d-flex align-items-center justify-content-center"
+                            style={{ width: "100%", height: "100%" }}
+                          >
+                            <FaUser size={40} />
+                          </div>
+                        )}
+                      </div>
+                      <small className="text-muted d-block mt-2">
+                        Nhấp để thay đổi ảnh
+                      </small>
+                      <input
+                        type="file"
+                        ref={fileInputRef}
+                        style={{ display: "none" }}
+                        accept="image/*"
+                        onChange={handleFileSelect}
+                      />
+                    </div>
+                    <Dropdown.Divider />
                     <Dropdown.Item onClick={handleAccountClick}>
                       <FaUser className="me-2" />
                       Tài khoản của bạn

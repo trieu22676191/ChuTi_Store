@@ -20,7 +20,6 @@ import {
   FaMapMarkerAlt,
   FaClipboardList,
 } from "react-icons/fa";
-import logo from "../img/logo.png";
 import Login from "./Login";
 import Signup from "./Signup";
 import { Link, useNavigate } from "react-router-dom";
@@ -109,7 +108,7 @@ const Header = () => {
             style={{ width: "12%" }}
           >
             <img
-              src={logo}
+              src="../img/logo.png"
               alt="Logo"
               width="45"
               height="45"

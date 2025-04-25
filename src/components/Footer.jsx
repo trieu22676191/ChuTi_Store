@@ -7,7 +7,6 @@ import {
   FaClock,
   FaRegCalendar,
 } from "react-icons/fa";
-import storeImage from "../img/store.png";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
@@ -92,7 +91,7 @@ const Footer = () => {
           <Col md={4}>
             <h5 className="text-white fw-bold mb-4">Hệ thống cửa hàng</h5>
             <img
-              src={storeImage}
+              src="../img/store.png"
               alt="Hệ thống cửa hàng"
               className="w-100 rounded"
               style={{ maxHeight: "200px", objectFit: "cover" }}

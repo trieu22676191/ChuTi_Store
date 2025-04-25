@@ -1,45 +1,45 @@
 // Khởi tạo dữ liệu mặc định
-// const defaultAccounts = [
-//   {
-//     // Có cả email và phone
-//     email: "admin@gmail.com",
-//     phone: "0823456789",
-//     password: "Admin@123",
-//     fullName: "Admin",
-//     gender: "Nam",
-//     birthDate: {
-//       day: 1,
-//       month: 1,
-//       year: 2000
-//     }
-//   },
-//   {
-//     // Có email mà không có phone
-//     email: "trieu22676191@gmail.com",
-//     phone: "",
-//     password: "Trieu@12",
-//     fullName: "Phú Triệu",
-//     gender: "Nam",
-//     birthDate: {
-//       day: 8,
-//       month: 12,
-//       year: 2004
-//     }
-//   },
-//   {
-//     //
-//     email: "",
-//     phone: "0362356676",
-//     password: "user@123",
-//     fullName: "Mỹ Lệ",
-//     gender: "Nữ",
-//     birthDate: {
-//       day: 15,
-//       month: 6,
-//       year: 1995
-//     }
-//   }
-// ];
+const defaultAccounts = [
+  {
+    // Có cả email và phone
+    email: "admin@gmail.com",
+    phone: "0823456789",
+    password: "Admin@123",
+    fullName: "Admin",
+    gender: "Nam",
+    birthDate: {
+      day: 1,
+      month: 1,
+      year: 2000
+    }
+  },
+  {
+    // Có email mà không có phone
+    email: "trieu22676191@gmail.com",
+    phone: "",
+    password: "Trieu@12",
+    fullName: "Phú Triệu",
+    gender: "Nam",
+    birthDate: {
+      day: 8,
+      month: 12,
+      year: 2004
+    }
+  },
+  {
+    //
+    email: "",
+    phone: "0362356676",
+    password: "user@123",
+    fullName: "Mỹ Lệ",
+    gender: "Nữ",
+    birthDate: {
+      day: 15,
+      month: 6,
+      year: 1995
+    }
+  }
+];
 
 // Lấy dữ liệu từ localStorage hoặc sử dụng dữ liệu mặc định
 export const accounts = JSON.parse(localStorage.getItem('accounts')) || defaultAccounts;

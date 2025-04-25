@@ -97,6 +97,10 @@ const Header = () => {
     }
   };
 
+  const handleCartClick = () => {
+    navigate("/cart"); // Điều hướng đến trang giỏ hàng
+  };
+
   return (
     <>
       <Navbar bg="success" variant="dark" expand="lg" className="py-2">
@@ -313,7 +317,7 @@ const Header = () => {
                 <span style={{ fontSize: "14px" }}>Hỗ trợ khách hàng</span>
               </Nav.Link>
               <Nav.Link
-                href="#cart"
+                onClick={handleCartClick} // Gọi hàm điều hướng
                 className="text-white d-flex align-items-center gap-2 text-nowrap position-relative"
               >
                 <div

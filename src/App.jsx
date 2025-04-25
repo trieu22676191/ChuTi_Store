@@ -8,6 +8,7 @@ import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import ChinhSach from "./pages/ChinhSach";
 import MyAccount from "./pages/MyAccount";
+import Cart from "./components/Cart";
 import PrivateRoute from "./context/PrivateRoute";
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
             <Route path="/chinh-sach" element={<ChinhSach />} />
             <Route path="/my-account" element={<MyAccount />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/cart" element={<Cart />} />
           </Routes>
         </main>
         <Login

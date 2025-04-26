@@ -13,6 +13,7 @@ import PrivateRoute from "./context/PrivateRoute";
 import GioiThieu from "./pages/GioiThieu";
 import LienHe from "./pages/LienHe";
 import DieuKhoan from "./pages/DieuKhoan";
+import ProductDetail from "./pages/ProductDetail";
 
 function App() {
   const [showLogin, setShowLogin] = useState(false);
@@ -41,6 +42,7 @@ function App() {
             <Route path="/dieu-khoan" element={<DieuKhoan />} />
             <Route path="/login" element={<Login />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/product/:id" element={<ProductDetail />} />
           </Routes>
         </main>
         <Login

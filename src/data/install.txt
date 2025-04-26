@@ -15,3 +15,6 @@ npm install react-router-dom
 
 #Lệnh để mở project
 npm run dev
+
+#lệnh chạy jsonserver:
+json-server --watch db.json --port 3000

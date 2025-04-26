@@ -130,43 +130,43 @@ const Home = () => {
           </Carousel.Item>
         </Carousel>
       </div>
-      <h4 style={{color: "rgb(25, 135, 84)", fontWeight: "bold", fontSize: "20px", marginTop: "20px", marginLeft: "75px"}}>
+      <h4 style={{ color: "rgb(25, 135, 84)", fontWeight: "bold", fontSize: "20px", marginTop: "20px", marginLeft: "75px" }}>
         Danh mục
       </h4>
       <div className="service-container">
         <ul className="service-list">
-        {services.map((service, index) => (
-          <li key={index} className="service-item">
-            <img src={service.icon} alt={service.text} className="service-icon" />
-            <p className="service-text">{service.text}</p>
-          </li>
-        ))}
-      </ul>
+          {services.map((service, index) => (
+            <li key={index} className="service-item">
+              <img src={service.icon} alt={service.text} className="service-icon" />
+              <p className="service-text">{service.text}</p>
+            </li>
+          ))}
+        </ul>
       </div>
 
       <FlashDeals />
 
       {/* Top bán chạy */}
-      <h2 style={{color: '#198754', marginTop: 40, fontSize: 20, fontWeight: "bold", marginLeft: 75}}>Top bán chạy</h2>
+      <h2 style={{ color: '#198754', marginTop: 40, fontSize: 20, fontWeight: "bold", marginLeft: 75 }}>Top bán chạy</h2>
       <div className="product-slider-container">
         <div className="product-list">
           {currentProducts.map((sp) => (
-            <div key={sp.id} className="product-card">
+            <Link to={`/product/${sp.id}`} key={sp.id} className="product-card">
               <img src={sp.image} alt={sp.name} />
               <h4>{sp.name}</h4>
               <p>{formatPrice(sp.price)}</p>
               <p>Đã bán: {sp.totalCount}</p>
-            </div>
+            </Link>
           ))}
         </div>
-        <button 
+        <button
           className="slider-nav-button prev"
           onClick={handlePrevPage}
           disabled={currentPage === 0}
         >
           ‹
         </button>
-        <button 
+        <button
           className="slider-nav-button next"
           onClick={handleNextPage}
           disabled={currentPage >= Math.ceil(topTotal.length / productsPerPage) - 1}
@@ -176,26 +176,26 @@ const Home = () => {
       </div>
 
       {/* Top tìm kiếm */}
-      <h2 style={{color: '#198754', marginTop: 40, fontSize: 20, fontWeight: "bold", marginLeft: 75}}>Top tìm kiếm</h2>
+      <h2 style={{ color: '#198754', marginTop: 40, fontSize: 20, fontWeight: "bold", marginLeft: 75 }}>Top tìm kiếm</h2>
       <div className="product-slider-container">
         <div className="product-list">
           {currentSearchProducts.map((sp) => (
-            <div key={sp.id} className="product-card">
+            <Link to={`/product/${sp.id}`} key={sp.id} className="product-card">
               <img src={sp.image} alt={sp.name} />
               <h4>{sp.name}</h4>
               <p>{formatPrice(sp.price)}</p>
               <p>Đã bán: {sp.soldCount}</p>
-            </div>
+            </Link>
           ))}
         </div>
-        <button 
+        <button
           className="slider-nav-button prev"
           onClick={handlePrevSearchPage}
           disabled={currentSearchPage === 0}
         >
           ‹
         </button>
-        <button 
+        <button
           className="slider-nav-button next"
           onClick={handleNextSearchPage}
           disabled={currentSearchPage >= Math.ceil(topSold.length / productsPerPage) - 1}
@@ -205,16 +205,16 @@ const Home = () => {
       </div>
 
       <Products />
-      
+
       <div className="service-support">
         <div className="service-item">
           <img src="/img/Quang Cao/Thanhtoan.png" alt="Thanh toán khi nhận hàng" />
           <div className="service-text">
             <h5>Thanh toán khi nhận hàng</h5>
-            
+
           </div>
         </div>
-        
+
         <div className="service-item">
           <img src="/img/Quang Cao/FreeShip.png" alt="Giao nhanh miễn phí 2H" />
           <div className="service-text">

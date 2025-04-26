@@ -242,7 +242,7 @@
 /* Top bán chạy & Top tìm kiếm */
 .product-list {
   display: flex;
-  gap: 24px;
+  gap: 5px;
   flex-wrap: wrap;
   margin: 24px 0 40px 0;
   justify-content: flex-start;

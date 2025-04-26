@@ -10,6 +10,7 @@ import ChinhSach from "./pages/ChinhSach";
 import MyAccount from "./pages/MyAccount";
 import Cart from "./components/Cart";
 import PrivateRoute from "./context/PrivateRoute";
+import ProductDetail from "./pages/ProductDetail";
 
 function App() {
   const [showLogin, setShowLogin] = useState(false);
@@ -35,6 +36,7 @@ function App() {
             <Route path="/my-account" element={<MyAccount />} />
             <Route path="/login" element={<Login />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/product/:id" element={<ProductDetail />} />
           </Routes>
         </main>
         <Login

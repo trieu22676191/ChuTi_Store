@@ -57,13 +57,13 @@ const Footer = () => {
               Điều khoản và chính sách
             </h5>
             <div className="d-flex flex-column gap-2">
-              <a
-                href="#"
+              <Link
+                to="/dieu-khoan"
                 className="text-white text-decoration-none"
                 style={{ ":hover": { textDecoration: "underline !important" } }}
               >
                 Điều khoản sử dụng
-              </a>
+              </Link>
               <Link
                 to="/chinh-sach"
                 className="text-white text-decoration-none"
@@ -71,19 +71,19 @@ const Footer = () => {
                 Chính sách bảo mật
               </Link>
 
-              <a
-                href="#"
+              <Link
+                to="/lien-he"
                 className="text-white text-decoration-none hover-underline"
               >
                 Liên hệ
-              </a>
+              </Link>
 
-              <a
-                href="#"
+              <Link
+                to="/gioi-thieu"
                 className="text-white text-decoration-none hover-underline"
               >
                 Giới thiệu về ChuTi
-              </a>
+              </Link>
             </div>
           </Col>
 

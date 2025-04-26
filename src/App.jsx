@@ -10,6 +10,9 @@ import ChinhSach from "./pages/ChinhSach";
 import MyAccount from "./pages/MyAccount";
 import Cart from "./components/Cart";
 import PrivateRoute from "./context/PrivateRoute";
+import GioiThieu from "./pages/GioiThieu";
+import LienHe from "./pages/LienHe";
+import DieuKhoan from "./pages/DieuKhoan";
 
 function App() {
   const [showLogin, setShowLogin] = useState(false);
@@ -33,6 +36,9 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/chinh-sach" element={<ChinhSach />} />
             <Route path="/my-account" element={<MyAccount />} />
+            <Route path="/gioi-thieu" element={<GioiThieu />} />
+            <Route path="/lien-he" element={<LienHe />} />
+            <Route path="/dieu-khoan" element={<DieuKhoan />} />
             <Route path="/login" element={<Login />} />
             <Route path="/cart" element={<Cart />} />
           </Routes>

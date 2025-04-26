@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, Row, Col, Spinner } from 'react-bootstrap';
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { Link } from 'react-router-dom';
-import '../Css/FlashDeals.css';
+import '../../Css/Home/FlashDeals.css';
 
 const FlashDeals = () => {
   const [products, setProducts] = useState([]);

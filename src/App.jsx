@@ -15,6 +15,9 @@ import LienHe from "./pages/LienHe";
 import DieuKhoan from "./pages/DieuKhoan";
 import ProductDetail from "./pages/ProductDetail";
 import { CartProvider } from "./context/CartContext";
+import { CheckAddToCartProvider } from "./context/CheckAddToCart";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function AppContent() {
   const [showLogin, setShowLogin] = useState(false);
@@ -22,7 +25,8 @@ function AppContent() {
   const location = useLocation();
 
   useEffect(() => {
-    if (location.state?.showLogin) {
+    // Thêm kiểm tra state.showModal
+    if (location.state?.showModal) {
       setShowLogin(true);
     }
   }, [location.state]);
@@ -65,11 +69,26 @@ function AppContent() {
 
 function App() {
   return (
-    <BrowserRouter>
-      <CartProvider>
-        <AppContent />
-      </CartProvider>
-    </BrowserRouter>
+    <>
+      <BrowserRouter>
+        <CartProvider>
+          <CheckAddToCartProvider>
+            <AppContent />
+          </CheckAddToCartProvider>
+        </CartProvider>
+      </BrowserRouter>
+      <ToastContainer
+        position="top-right"
+        autoClose={1500}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+    </>
   );
 }
 

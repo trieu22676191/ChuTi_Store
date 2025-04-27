@@ -328,7 +328,7 @@ const Header = () => {
                     style={{ width: "35px", height: "35px" }}
                   >
                     <FaShoppingCart size={18} />
-                    {isLoggedIn && (
+                    {isLoggedIn && cartCount > 0 && (
                       <span
                         className="position-absolute bg-warning text-dark rounded-circle d-flex align-items-center justify-content-center"
                         style={{

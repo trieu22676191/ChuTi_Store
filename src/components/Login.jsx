@@ -98,6 +98,7 @@ const Login = ({
         // Gọi callback để cập nhật header
         onLoginSuccess && onLoginSuccess(updatedAccount);
         handleClose();
+        navigate("/"); // Chuyển về trang home sau khi đăng nhập thành công
       } else {
         setError("Email/Số điện thoại hoặc mật khẩu không đúng");
       }

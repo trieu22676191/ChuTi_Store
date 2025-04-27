@@ -13,16 +13,17 @@ import {
   FaUser,
   FaStore,
   FaPhone,
-  FaShoppingCart,
   FaSearch,
   FaSignOutAlt,
   FaHeart,
   FaMapMarkerAlt,
   FaClipboardList,
+  FaShoppingCart,
 } from "react-icons/fa";
 import Login from "./Login";
 import Signup from "./Signup";
 import { Link, useNavigate } from "react-router-dom";
+import { useCart } from "../context/CartContext";
 
 const Header = () => {
   const [showLogin, setShowLogin] = useState(false);
@@ -31,6 +32,7 @@ const Header = () => {
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
+  const { cartCount } = useCart();
 
   const handleShowLogin = () => setShowLogin(true);
   const handleCloseLogin = () => setShowLogin(false);
@@ -112,7 +114,7 @@ const Header = () => {
             style={{ width: "12%" }}
           >
             <img
-              src="../img/logo.png"
+              src="/img/logo.png"
               alt="Logo"
               width="45"
               height="45"
@@ -317,26 +319,32 @@ const Header = () => {
                 <span style={{ fontSize: "14px" }}>Hỗ trợ khách hàng</span>
               </Nav.Link>
               <Nav.Link
-                onClick={handleCartClick} // Gọi hàm điều hướng
+                onClick={handleCartClick}
                 className="text-white d-flex align-items-center gap-2 text-nowrap position-relative"
               >
-                <div
-                  className="border border-light rounded-circle d-flex align-items-center justify-content-center position-relative"
-                  style={{ width: "35px", height: "35px" }}
-                >
-                  <FaShoppingCart size={16} />
+                <div className="cart-icon position-relative">
                   <div
-                    className="position-absolute d-flex align-items-center justify-content-center bg-warning text-dark rounded-circle"
-                    style={{
-                      width: "18px",
-                      height: "18px",
-                      top: "-6px",
-                      right: "-6px",
-                      fontSize: "11px",
-                      fontWeight: "bold",
-                    }}
+                    className="border border-light rounded-circle d-flex align-items-center justify-content-center position-relative"
+                    style={{ width: "35px", height: "35px" }}
                   >
-                    0
+                    <FaShoppingCart size={18} />
+                    {isLoggedIn && (
+                      <span
+                        className="position-absolute bg-warning text-dark rounded-circle d-flex align-items-center justify-content-center"
+                        style={{
+                          width: "20px",
+                          height: "20px",
+                          top: "-8px",
+                          right: "-8px",
+                          fontSize: "13px",
+                          fontWeight: "bold",
+                          border: "2px solid #218c5a",
+                          boxShadow: "0 1px 4px rgba(0,0,0,0.08)",
+                        }}
+                      >
+                        {cartCount}
+                      </span>
+                    )}
                   </div>
                 </div>
               </Nav.Link>

@@ -1,11 +1,13 @@
-import { Navigate } from "react-router-dom";
+import { useState } from "react";
+import Login from "../components/Login";
 
 const PrivateRoute = ({ children }) => {
   const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+  const [showLogin, setShowLogin] = useState(!loggedInUser);
 
   if (!loggedInUser) {
-    // Nếu chưa đăng nhập, chuyển về trang chủ
-    return <Navigate to="/" replace />;
+    // Hiển thị modal đăng nhập thay vì chuyển trang
+    return <Login show={showLogin} handleClose={() => setShowLogin(false)} />;
   }
 
   return children;

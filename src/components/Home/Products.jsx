@@ -4,7 +4,7 @@ import { Container, Row, Pagination, Spinner } from 'react-bootstrap';
 import ProductItem from './ProductItem';
 import '../../Css/Home/Products.css';
 
-const Products = () => {
+const Products = ({ filterCategories, scrollToTopType, showAddToCart = false }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -23,14 +23,33 @@ const Products = () => {
       });
   }, []);
 
+  // Khi filterCategories thay đổi, chuyển về trang 1 và scroll lên đầu trang
+  useEffect(() => {
+    setCurrentPage(1);
+    if (scrollToTopType === 'top') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      window.scrollTo(0, 2400);
+    }
+  }, [filterCategories, scrollToTopType]);
+
+  // Lọc sản phẩm nếu có filterCategories
+  const filteredProducts = filterCategories && Array.isArray(filterCategories)
+    ? products.filter(product => filterCategories.includes(product.category))
+    : products;
+
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
-  const totalPages = Math.ceil(products.length / productsPerPage);
+  const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
-    window.scrollTo(0, 2400);
+    if (scrollToTopType === 'top') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      window.scrollTo(0, 2400);
+    }
   };
 
   if (loading) {
@@ -46,7 +65,7 @@ const Products = () => {
       <h4 className="section-title">Danh Sách Sản Phẩm</h4>
       <Row className="products-grid">
         {currentProducts.map(product => (
-          <ProductItem key={product.id} product={product} />
+          <ProductItem key={product.id} product={product} showAddToCart={showAddToCart} />
         ))}
       </Row>
       <div className="d-flex justify-content-center mt-4 mb-4">

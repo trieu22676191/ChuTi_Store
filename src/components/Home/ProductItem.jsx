@@ -1,12 +1,29 @@
 import React from 'react';
-import { Card, Col } from 'react-bootstrap';
+import { Card, Col, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { useCart } from '../../context/CartContext';
+import { useCheckAddToCart } from '../../context/CheckAddToCart';
 
-const ProductItem = ({ product }) => {
+const ProductItem = ({ product, showAddToCart = false }) => {
+  const { addToCart } = useCart();
+  const { handleAddToCart } = useCheckAddToCart();
+
+  const onAddToCart = () => {
+    const productToAdd = {
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      discount: product.discount,
+      quantity: 1,
+    };
+    handleAddToCart(addToCart, productToAdd);
+  };
+
   return (
     <Col xs={6} sm={4} md={3} lg={2} className="mb-3">
-      <Link to={`/product/${product.id}`} className="product-link" onClick={() => window.scrollTo(0, 0)}>
-        <Card className="product-card">
+      <Card className="product-card">
+        <Link to={`/product/${product.id}`} className="product-link" onClick={() => window.scrollTo(0, 0)}>
           <div className="product-image-container">
             <Card.Img variant="top" src={product.image} className="product-image card-img-top" />
             {product.discount > 0 && (
@@ -40,8 +57,17 @@ const ProductItem = ({ product }) => {
               <div className="sales">Đã bán: {product.soldCount}</div>
             </div>
           </Card.Body>
-        </Card>
-      </Link>
+        </Link>
+        {showAddToCart && (
+          <Button 
+            variant="success" 
+            className="add-to-cart-btn"
+            onClick={onAddToCart}
+          >
+            Thêm vào giỏ
+          </Button>
+        )}
+      </Card>
     </Col>
   );
 };

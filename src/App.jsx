@@ -18,6 +18,7 @@ import { CartProvider } from "./context/CartContext";
 import { CheckAddToCartProvider } from "./context/CheckAddToCart";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ChuTiDeals from './pages/ChuTiDeals';
 
 function AppContent() {
   const [showLogin, setShowLogin] = useState(false);
@@ -46,6 +47,7 @@ function AppContent() {
       <main className="flex-grow-1">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/chutideals" element={<ChuTiDeals />} />
           <Route path="/chinh-sach" element={<ChinhSach />} />
           <Route path="/my-account" element={<MyAccount />} />
           <Route path="/gioi-thieu" element={<GioiThieu />} />

@@ -78,20 +78,14 @@ const Home = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mx-auto">
-            {[
-              "DANH MỤC",
-              "CHUTI DEALS",
-              "HOT DEALS",
-              "THƯƠNG HIỆU",
-              "HÀNG MỚI VỀ",
-              "BÁN CHẠY",
-              "CLINIC & SPA",
-              "DERMAHAIR"
-            ].map((item, index) => (
-              <Nav.Link key={index} href="#" className="custom-nav-link">
-                {item}
-              </Nav.Link>
-            ))}
+            <Nav.Link href="/" className="custom-nav-link">DANH MỤC</Nav.Link>
+            <Nav.Link href="/chutideals" className="custom-nav-link">CHUTI DEALS</Nav.Link>
+            <Nav.Link href="#" className="custom-nav-link">HOT DEALS</Nav.Link>
+            <Nav.Link href="#" className="custom-nav-link">THƯƠNG HIỆU</Nav.Link>
+            <Nav.Link href="#" className="custom-nav-link">HÀNG MỚI VỀ</Nav.Link>
+            <Nav.Link href="#" className="custom-nav-link">BÁN CHẠY</Nav.Link>
+            <Nav.Link href="#" className="custom-nav-link">CLINIC & SPA</Nav.Link>
+            <Nav.Link href="#" className="custom-nav-link">DERMAHAIR</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

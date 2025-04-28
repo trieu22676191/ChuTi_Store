@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const ProductItem = ({ product }) => {
   return (
     <Col xs={6} sm={4} md={3} lg={2} className="mb-3">
-      <Link to={`/product/${product.id}`} className="product-link">
+      <Link to={`/product/${product.id}`} className="product-link" onClick={() => window.scrollTo(0, 0)}>
         <Card className="product-card">
           <div className="product-image-container">
             <Card.Img variant="top" src={product.image} className="product-image card-img-top" />

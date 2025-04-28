@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { Container, Nav, Navbar, Button } from "react-bootstrap";
 import { useCheckAddToCart } from "../context/CheckAddToCart";
 import { useCart } from "../context/CartContext";
+import "../Css/Chi Tiet San Pham/ProductDetail.css";
+import ProductGrid from '../components/Home/ProductGrid';
 
 const mockThumbs = [
   "/img/San Pham/SP1.jpg",
@@ -19,6 +21,10 @@ const tabList = [
   { label: "Đánh giá", key: "danhgia" },
   { label: "Hỏi đáp", key: "hoidap" },
 ];
+
+const handleSendQuestion = async () => {
+  // ...
+};
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -48,6 +54,24 @@ const ProductDetail = () => {
   });
   const { handleAddToCart } = useCheckAddToCart();
   const { addToCart } = useCart();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [currentQPage, setCurrentQPage] = useState(1);
+  const commentsPerPage = 5;
+  const totalPages = Math.ceil(reviews.length / commentsPerPage);
+  const paginatedReviews = reviews.slice(
+    (currentPage - 1) * commentsPerPage,
+    currentPage * commentsPerPage
+  );
+  const questionsPerPage = 5;
+  const [questions, setQuestions] = useState([]);
+  const totalQPages = Math.ceil(questions.length / questionsPerPage);
+  const paginatedQuestions = questions.slice(
+    (currentQPage - 1) * questionsPerPage,
+    currentQPage * questionsPerPage
+  );
+  const [questionUsers, setQuestionUsers] = useState({});
+  const [newQuestion, setNewQuestion] = useState("");
+  const [suggestedProducts, setSuggestedProducts] = useState([]);
 
   const tabContent = {
     mota: product && (
@@ -322,73 +346,27 @@ const ProductDetail = () => {
     ),
     danhgia: (
       <div>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "flex-start",
-            gap: 32,
-            marginBottom: 24,
-          }}
-        >
-          <div style={{ minWidth: 160, textAlign: "center" }}>
-            <div
-              style={{
-                fontSize: 48,
-                fontWeight: 700,
-                color: "#e53935",
-                lineHeight: 1,
-              }}
-            >
-              {reviewStats.avg}
-            </div>
-            <div
-              style={{
-                color: "#f59e42",
-                fontSize: 22,
-                fontWeight: 700,
-                margin: "4px 0",
-              }}
-            >
-              ★
-            </div>
-            <div style={{ fontSize: 16, color: "#222" }}>
-              {reviewStats.total} nhận xét
-            </div>
+        <div className="product-review-summary">
+          <div className="product-review-average">
+            <div className="product-review-average-score">{reviewStats.avg}</div>
+            <div className="product-review-average-star">★</div>
+            <div className="product-review-average-count">{reviewStats.total} nhận xét</div>
           </div>
-          <div style={{ flex: 1 }}>
+          <div className="product-review-stars">
             {[5, 4, 3, 2, 1].map((star) => (
-              <div
-                key={star}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 8,
-                  marginBottom: 2,
-                }}
-              >
-                <span style={{ width: 32 }}>{star} sao</span>
-                <div
-                  style={{
-                    flex: 1,
-                    height: 8,
-                    background: "#eee",
-                    borderRadius: 4,
-                    overflow: "hidden",
-                    margin: "0 8px",
-                  }}
-                >
+              <div key={star} className="product-review-star-row">
+                <span className="product-review-star-label">{star} sao</span>
+                <div className="product-review-star-bar-bg">
                   <div
+                    className="product-review-star-bar"
                     style={{
                       width: reviewStats.total
-                        ? (reviewStats.stars[star] / reviewStats.total) * 100 +
-                          "%"
+                        ? (reviewStats.stars[star] / reviewStats.total) * 100 + "%"
                         : 0,
-                      height: "100%",
-                      background: "#e53935",
                     }}
                   ></div>
                 </div>
-                <span style={{ color: "#888", fontSize: 13 }}>
+                <span className="product-review-star-desc">
                   {star === 5
                     ? "Rất hài lòng"
                     : star === 4
@@ -399,48 +377,58 @@ const ProductDetail = () => {
                     ? "Không hài lòng"
                     : "Rất tệ"}
                 </span>
-                <span style={{ marginLeft: 8, color: "#222", fontWeight: 600 }}>
-                  {reviewStats.stars[star]}
-                </span>
+                <span className="product-review-star-count">{reviewStats.stars[star]}</span>
               </div>
             ))}
           </div>
-          <div style={{ minWidth: 220, textAlign: "center" }}>
-            <div style={{ marginBottom: 8, color: "#888" }}>
+          <div className="product-review-comment-box">
+            <div className="product-review-comment-desc">
               Chia sẻ nhận xét của bạn về sản phẩm này
             </div>
+            <button className="product-review-comment-btn">Viết Bình luận</button>
+          </div>
+        </div>
+        <div className="product-review-pagination-row">
+          <span>{reviewStats.total} bình luận cho sản phẩm này</span>
+          <div className="pagination">
             <button
-              style={{
-                background: "#ff9800",
-                color: "#fff",
-                border: "none",
-                borderRadius: 6,
-                fontWeight: 700,
-                fontSize: 16,
-                padding: "10px 28px",
-                cursor: "pointer",
-              }}
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+              disabled={currentPage === 1}
+              style={{ marginRight: 8 }}
             >
-              Viết Bình luận
+              &lt;
+            </button>
+            {Array.from({ length: totalPages }, (_, i) => (
+              <button
+                key={i + 1}
+                onClick={() => setCurrentPage(i + 1)}
+                style={{
+                  fontWeight: currentPage === i + 1 ? 700 : 400,
+                  color: currentPage === i + 1 ? "#e53935" : "#222",
+                  background: "transparent",
+                  border: "none",
+                  margin: "0 2px",
+                  cursor: "pointer",
+                  fontSize: 15,
+                }}
+              >
+                {i + 1}
+              </button>
+            ))}
+            <button
+              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+              disabled={currentPage === totalPages}
+              style={{ marginLeft: 8 }}
+            >
+              &gt;
             </button>
           </div>
         </div>
-        <div
-          style={{
-            background: "#f6f6f6",
-            borderRadius: 6,
-            padding: "10px 16px",
-            fontWeight: 600,
-            marginBottom: 12,
-          }}
-        >
-          {reviewStats.total} bình luận cho sản phẩm này
-        </div>
         <div>
-          {reviews.length === 0 && (
+          {paginatedReviews.length === 0 && (
             <i>Chưa có đánh giá nào cho sản phẩm này.</i>
           )}
-          {reviews.map((c, idx) => (
+          {paginatedReviews.map((c, idx) => (
             <div
               key={idx}
               style={{ borderBottom: "1px solid #eee", padding: "12px 0" }}
@@ -472,7 +460,130 @@ const ProductDetail = () => {
     ),
     hoidap: (
       <div>
-        <i>Chưa có câu hỏi nào cho sản phẩm này.</i>
+        
+        <div className="product-review-pagination-row">
+          <span>{questionCount} câu hỏi cho sản phẩm này</span>
+          <div className="pagination">
+            <button
+              onClick={() => setCurrentQPage((p) => Math.max(1, p - 1))}
+              disabled={currentQPage === 1}
+              style={{ marginRight: 8 }}
+            >
+              &lt;
+            </button>
+            {Array.from({ length: totalQPages }, (_, i) => (
+              <button
+                key={i + 1}
+                onClick={() => setCurrentQPage(i + 1)}
+                style={{
+                  fontWeight: currentQPage === i + 1 ? 700 : 400,
+                  color: currentQPage === i + 1 ? "#e53935" : "#222",
+                  background: "transparent",
+                  border: "none",
+                  margin: "0 2px",
+                  cursor: "pointer",
+                  fontSize: 15,
+                }}
+              >
+                {i + 1}
+              </button>
+            ))}
+            <button
+              onClick={() => setCurrentQPage((p) => Math.min(totalQPages, p + 1))}
+              disabled={currentQPage === totalQPages}
+              style={{ marginLeft: 8 }}
+            >
+              &gt;
+            </button>
+          </div>
+        </div>
+        <div className="question-input-row">
+          <input
+            type="text"
+            className="question-input"
+            placeholder="Bạn có câu hỏi với sản phẩm này? Đặt câu hỏi ngay."
+            value={newQuestion}
+            onChange={e => setNewQuestion(e.target.value)}
+            onKeyDown={e => { if (e.key === 'Enter') handleSendQuestion(); }}
+          />
+          <button className="question-send-btn" onClick={handleSendQuestion}>
+            Gửi
+          </button>
+        </div>
+        <div>
+          {paginatedQuestions.length === 0 && (
+            <i>Chưa có câu hỏi nào cho sản phẩm này.</i>
+          )}
+          {paginatedQuestions.map((q, idx) => (
+            <div
+              key={idx}
+              style={{ borderBottom: "1px solid #eee", padding: "12px 0" }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                  marginBottom: 4,
+                }}
+              >
+                <span style={{ fontWeight: 700, color: "#198754" }}>
+                  {questionUsers[q.id_User]?.name || "Người dùng"}
+                </span>
+                <span style={{ color: "#888", fontSize: 13, marginLeft: 8 }}>
+                  {q.date}
+                </span>
+              </div>
+              <div style={{ fontSize: 16 }}>{q.question}</div>
+            </div>
+          ))}
+        </div>
+        {/* Sản phẩm gợi ý */}
+        <div style={{ marginTop: 48 }}>
+          <h3 style={{ color: "#3E8754", fontWeight: 700, fontSize: 22, marginBottom: 24 }}>Sản phẩm gợi ý</h3>
+          <ProductGrid products={suggestedProducts} />
+          {/* Dịch vụ hỗ trợ */}
+          <div className="service-support" style={{marginTop: 32, marginBottom: 0}}>
+            <div className="service-item">
+              <img src="/img/Quang Cao/Thanhtoan.png" alt="Thanh toán khi nhận hàng" />
+              <div className="service-text">
+                <h5>Thanh toán khi nhận hàng</h5>
+              </div>
+            </div>
+            <div className="service-item">
+              <img src="/img/Quang Cao/FreeShip.png" alt="Giao nhanh miễn phí 2H" />
+              <div className="service-text">
+                <h5>Giao nhanh miễn phí 24H</h5>
+              </div>
+            </div>
+            <div className="service-item">
+              <img src="/img/Quang Cao/TraHang.png" alt="30 ngày đổi trả miễn phí" />
+              <div className="service-text">
+                <h5>30 ngày đổi trả miễn phí</h5>
+              </div>
+            </div>
+            <div className="service-item">
+              <img src="/img/Quang Cao/UyTin.png" alt="Thương hiệu uy tín toàn cầu" />
+              <div className="service-text">
+                <h5>Thương hiệu uy tín toàn cầu</h5>
+              </div>
+            </div>
+            <div className="service-item">
+              <img src="/img/Quang Cao/HotLine.png" alt="Hotline CSKH" />
+              <div className="service-text">
+                <h5>HOTLINE CSKH</h5>
+                <h5>1800 6324</h5>
+              </div>
+            </div>
+            <div className="service-item">
+              <img src="/img/Quang Cao/Location.png" alt="Tìm chi nhánh" />
+              <div className="service-text">
+                <h5>TÌM CHI NHÁNH</h5>
+                <h5>Hệ thống ChuTi</h5>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     ),
   };
@@ -489,6 +600,7 @@ const ProductDetail = () => {
       .then((res) => res.json())
       .then(async (data) => {
         setReviews(data);
+        setCommentCount(data.length);
         // Lấy thông tin user cho từng đánh giá
         const userIds = [...new Set(data.map((c) => c.id_User))];
         const userFetches = await Promise.all(
@@ -513,11 +625,34 @@ const ProductDetail = () => {
           stars,
         });
       });
-    // Fetch questions count
+    // Fetch questions count và dữ liệu câu hỏi
     fetch(`http://localhost:3000/questions?id_SP=${id}`)
       .then((res) => res.json())
-      .then((data) => setQuestionCount(data.length));
-  }, [id]);
+      .then(async (data) => {
+        setQuestionCount(data.length);
+        setQuestions(data);
+        // Lấy thông tin user cho từng câu hỏi
+        const userIds = [...new Set(data.map((q) => q.id_User))];
+        const userFetches = await Promise.all(
+          userIds.map((uid) =>
+            fetch(`http://localhost:3000/users/${uid}`).then((r) => r.json())
+          )
+        );
+        const userMap = {};
+        userIds.forEach((uid, idx) => (userMap[uid] = userFetches[idx]));
+        setQuestionUsers(userMap);
+      });
+    // Fetch sản phẩm gợi ý (cùng loại, trừ sản phẩm hiện tại)
+    fetch('http://localhost:3000/products')
+      .then(res => res.json())
+      .then(data => {
+        if (product) {
+          // Lọc sản phẩm cùng brand hoặc cùng loại, loại bỏ sản phẩm hiện tại
+          const filtered = data.filter(p => p.id !== Number(id) && (p.brand === product.brand || p.types?.some(type => product.types?.includes(type))));
+          setSuggestedProducts(filtered.slice(0, 8)); // lấy tối đa 8 sản phẩm gợi ý
+        }
+      });
+  }, [id, product]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -1115,7 +1250,9 @@ const ProductDetail = () => {
           </div>
         </div>
       </div>
+      
     </Container>
+    
   );
 };
 

@@ -18,7 +18,8 @@ import { CartProvider } from "./context/CartContext";
 import { CheckAddToCartProvider } from "./context/CheckAddToCart";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ChuTiDeals from './pages/ChuTiDeals';
+import ChuTiDeals from "./pages/ChuTiDeals";
+import Brand from "./pages/Brand";
 
 function AppContent() {
   const [showLogin, setShowLogin] = useState(false);
@@ -54,6 +55,7 @@ function AppContent() {
           <Route path="/lien-he" element={<LienHe />} />
           <Route path="/dieu-khoan" element={<DieuKhoan />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/brand" element={<Brand />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/product/:id" element={<ProductDetail />} />
         </Routes>

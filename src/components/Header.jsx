@@ -295,7 +295,8 @@ const Header = () => {
                 </Nav.Link>
               )}
               <Nav.Link
-                href="#store"
+                as={Link}
+                to="/brand"
                 className="text-white d-flex align-items-center gap-2 text-nowrap"
               >
                 <div

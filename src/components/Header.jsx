@@ -22,6 +22,7 @@ import {
 } from "react-icons/fa";
 import Login from "./Login";
 import Signup from "./Signup";
+import Address from "./Address";
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 
@@ -101,6 +102,11 @@ const Header = () => {
 
   const handleCartClick = () => {
     navigate("/cart"); // Điều hướng đến trang giỏ hàng
+  };
+
+  // Thêm hàm xử lý chuyển trang address
+  const handleAddressClick = () => {
+    navigate("/address");
   };
 
   return (
@@ -269,7 +275,9 @@ const Header = () => {
                       <FaHeart className="me-2" />
                       Sản phẩm yêu thích
                     </Dropdown.Item>
-                    <Dropdown.Item>
+                    <Dropdown.Item onClick={handleAddressClick}>
+                      {" "}
+                      {/* Thay đổi ở đây */}
                       <FaMapMarkerAlt className="me-2" />
                       Địa chỉ giao hàng
                     </Dropdown.Item>

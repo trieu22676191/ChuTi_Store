@@ -99,6 +99,16 @@ const Address = () => {
     localStorage.setItem("addresses", JSON.stringify(updatedAddresses));
   };
 
+  // Thêm hàm xử lý đặt địa chỉ mặc định
+  const handleSetDefault = (index) => {
+    const updatedAddresses = addresses.map((address, idx) => ({
+      ...address,
+      isDefault: idx === index,
+    }));
+    setAddresses(updatedAddresses);
+    localStorage.setItem("addresses", JSON.stringify(updatedAddresses));
+  };
+
   return (
     <Container className="py-4">
       <h2 className="mb-4">Sổ địa chỉ</h2>
@@ -131,8 +141,19 @@ const Address = () => {
             <div className="d-flex justify-content-between mb-2">
               <div>
                 <strong>{address.name}</strong>
-                {address.isDefault && (
+                {address.isDefault ? (
                   <span className="ms-2 badge bg-success">Mặc định</span>
+                ) : (
+                  addresses.length > 1 && (
+                    <Button
+                      variant="outline-success"
+                      size="sm"
+                      className="ms-2"
+                      onClick={() => handleSetDefault(index)}
+                    >
+                      Đặt làm mặc định
+                    </Button>
+                  )
                 )}
               </div>
               <div>
@@ -143,6 +164,7 @@ const Address = () => {
                   variant="link"
                   className="text-danger p-0"
                   onClick={() => handleDelete(index)}
+                  disabled={address.isDefault && addresses.length > 1}
                 >
                   Xóa
                 </Button>

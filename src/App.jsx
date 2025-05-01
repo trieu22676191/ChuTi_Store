@@ -21,6 +21,7 @@ import "react-toastify/dist/ReactToastify.css";
 import ChuTiDeals from "./pages/ChuTiDeals";
 import Brand from "./pages/Brand";
 import Address from "./components/Address";
+import Pay from "./pages/Pay";
 
 function AppContent() {
   const [showLogin, setShowLogin] = useState(false);
@@ -59,6 +60,7 @@ function AppContent() {
           <Route path="/address" element={<Address />} />
           <Route path="/brand" element={<Brand />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/pay" element={<Pay />} />
           <Route path="/product/:id" element={<ProductDetail />} />
         </Routes>
       </main>

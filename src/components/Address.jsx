@@ -10,9 +10,17 @@ const Address = () => {
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [districts, setDistricts] = useState([]);
   const [wards, setWards] = useState([]);
+  const [editingAddress, setEditingAddress] = useState(null);
 
   // Modal handlers
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setShow(false);
+    setEditingAddress(null);
+    setSelectedCity("");
+    setSelectedDistrict("");
+    setDistricts([]);
+    setWards([]);
+  };
   const handleShow = () => setShow(true);
 
   // Xử lý khi chọn thành phố
@@ -58,7 +66,7 @@ const Address = () => {
     }
   }, []);
 
-  // Sửa lại handleSubmit để lưu vào localStorage
+  // Sửa lại hàm handleSubmit
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -73,40 +81,82 @@ const Address = () => {
       (ward) => ward.Code === formData.get("ward")
     );
 
-    const newAddress = {
+    const newAddressData = {
+      // Đổi tên biến từ addressData thành newAddressData
       name: formData.get("name"),
       phone: formData.get("phone"),
       address: formData.get("address"),
       city: cityData?.FullName || "",
       district: districtData?.FullName || "",
       ward: wardData?.FullName || "",
-      isDefault: addresses.length === 0,
     };
 
-    const updatedAddresses = [...addresses, newAddress];
+    let updatedAddresses;
+    if (editingAddress) {
+      // Đang sửa địa chỉ
+      updatedAddresses = addresses.map((addr, idx) => {
+        if (idx === editingAddress.index) {
+          return {
+            ...newAddressData,
+            isDefault: addr.isDefault, // Giữ nguyên trạng thái mặc định
+          };
+        }
+        return addr;
+      });
+    } else {
+      // Thêm mới địa chỉ
+      newAddressData.isDefault = addresses.length === 0;
+      updatedAddresses = [...addresses, newAddressData];
+    }
+
     setAddresses(updatedAddresses);
-
-    // Lưu vào localStorage
     localStorage.setItem("addresses", JSON.stringify(updatedAddresses));
-
     handleClose();
+    setEditingAddress(null); // Reset editing state
   };
 
-  // Thêm hàm xóa địa chỉ
+  // Sửa lại hàm xóa địa chỉ để xử lý khi xóa địa chỉ mặc định
   const handleDelete = (index) => {
+    const deletedAddress = addresses[index];
     const updatedAddresses = addresses.filter((_, idx) => idx !== index);
+
+    // Nếu xóa địa chỉ mặc định và còn địa chỉ khác
+    if (deletedAddress.isDefault && updatedAddresses.length > 0) {
+      // Set địa chỉ đầu tiên làm mặc định
+      updatedAddresses[0].isDefault = true;
+    }
+
     setAddresses(updatedAddresses);
     localStorage.setItem("addresses", JSON.stringify(updatedAddresses));
   };
 
-  // Thêm hàm xử lý đặt địa chỉ mặc định
+  // Sửa lại hàm handleSetDefault
   const handleSetDefault = (index) => {
     const updatedAddresses = addresses.map((address, idx) => ({
       ...address,
-      isDefault: idx === index,
+      isDefault: idx === index, // Chỉ địa chỉ được chọn có isDefault = true
     }));
     setAddresses(updatedAddresses);
     localStorage.setItem("addresses", JSON.stringify(updatedAddresses));
+  };
+
+  // Thêm hàm xử lý khi bấm nút sửa
+  const handleEdit = (address, index) => {
+    setEditingAddress({ ...address, index });
+    // Set các giá trị cho select boxes
+    const cityData = addressData.find((city) => city.FullName === address.city);
+    if (cityData) {
+      setSelectedCity(cityData.Code);
+      const districtData = cityData.District.find(
+        (district) => district.FullName === address.district
+      );
+      if (districtData) {
+        setDistricts(cityData.District);
+        setSelectedDistrict(districtData.Code);
+        setWards(districtData.Ward);
+      }
+    }
+    setShow(true);
   };
 
   return (
@@ -157,7 +207,11 @@ const Address = () => {
                 )}
               </div>
               <div>
-                <Button variant="link" className="text-success p-0 me-3">
+                <Button
+                  variant="link"
+                  className="text-success p-0 me-3"
+                  onClick={() => handleEdit(address, index)}
+                >
                   Sửa
                 </Button>
                 <Button

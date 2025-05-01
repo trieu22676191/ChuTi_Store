@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Navbar, Nav } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const [cart, setCart] = useState([]);
   const [selected, setSelected] = useState([]);
   const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (loggedInUser) {
@@ -46,6 +48,29 @@ const Cart = () => {
     newCart[index].quantity = Math.max(1, newCart[index].quantity + delta);
     setCart(newCart);
     localStorage.setItem("cart", JSON.stringify(newCart));
+  };
+
+  const handleProceedToCheckout = () => {
+    if (selected.length === 0) {
+      alert("Vui lòng chọn ít nhất một sản phẩm");
+      return;
+    }
+
+    const selectedItems = cart
+      .filter((item) => selected.includes(item.id))
+      .map((item) => ({
+        ...item,
+        priceAfterDiscount: item.price * (1 - (item.discount || 0) / 100),
+      }));
+
+    // Lưu vào localStorage để tránh mất dữ liệu khi chuyển trang
+    localStorage.setItem("selectedItems", JSON.stringify(selectedItems));
+
+    // Chuyển hướng và gửi dữ liệu
+    navigate("/pay", {
+      state: { selectedItems },
+      replace: true,
+    });
   };
 
   return (
@@ -224,6 +249,18 @@ const Cart = () => {
                   })}
               </span>
             </div>
+            <button
+              className="btn btn-success"
+              disabled={selected.length === 0}
+              style={{
+                minWidth: "200px",
+                backgroundColor: "#198754",
+                border: "none",
+              }}
+              onClick={handleProceedToCheckout}
+            >
+              Tiến hành đặt hàng
+            </button>
           </div>
         </div>
       )}

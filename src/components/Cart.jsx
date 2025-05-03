@@ -69,8 +69,8 @@ const Cart = () => {
     // Chuyển hướng và gửi dữ liệu
     navigate("/pay", {
       state: { selectedItems },
-      replace: true,
     });
+    window.location.reload(); // Tải lại trang để cập nhật giỏ hàng
   };
 
   return (
@@ -101,7 +101,23 @@ const Cart = () => {
           Vui lòng đăng nhập để xem giỏ hàng.
         </div>
       ) : cart.length === 0 ? (
-        <div className="p-4 text-center">Giỏ hàng của bạn đang trống.</div>
+        <div className="p-4 text-center">
+          Giỏ hàng của bạn đang trống.
+          <br />
+          <button
+            className="btn btn-success mt-3"
+            style={{
+              minWidth: "200px",
+              marginRight: "12px",
+            }}
+            onClick={() => {
+              navigate("/");
+              window.location.reload();
+            }}
+          >
+            Tiếp tục mua sắm
+          </button>
+        </div>
       ) : (
         <div className="container py-4">
           <h3 className="mb-4">Giỏ hàng</h3>

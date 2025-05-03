@@ -23,6 +23,7 @@ import Brand from "./pages/Brand";
 import Address from "./components/Address";
 import Pay from "./pages/Pay";
 import HotDeal from "./pages/HotDeal";
+import MyOrder from "./pages/MyOrder";
 
 function AppContent() {
   const [showLogin, setShowLogin] = useState(false);
@@ -52,7 +53,7 @@ function AppContent() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/chutideals" element={<ChuTiDeals />} />
-          <Route path="/HotDeal" element={<HotDeal />}/>
+          <Route path="/HotDeal" element={<HotDeal />} />
           <Route path="/chinh-sach" element={<ChinhSach />} />
           <Route path="/my-account" element={<MyAccount />} />
           <Route path="/gioi-thieu" element={<GioiThieu />} />
@@ -63,6 +64,7 @@ function AppContent() {
           <Route path="/brand" element={<Brand />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/pay" element={<Pay />} />
+          <Route path="/my-order" element={<MyOrder />} />
           <Route path="/product/:id" element={<ProductDetail />} />
         </Routes>
       </main>

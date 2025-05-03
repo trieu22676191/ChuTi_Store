@@ -68,6 +68,11 @@ const Header = () => {
     navigate("/my-account");
   };
 
+  // Thêm vào sau các handle functions khác
+  const handleOrderClick = () => {
+    navigate("/my-order");
+  };
+
   const handleFileSelect = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -267,7 +272,7 @@ const Header = () => {
                       <FaUser className="me-2" />
                       Tài khoản của bạn
                     </Dropdown.Item>
-                    <Dropdown.Item>
+                    <Dropdown.Item onClick={handleOrderClick}>
                       <FaClipboardList className="me-2" />
                       Quản lý đơn hàng
                     </Dropdown.Item>

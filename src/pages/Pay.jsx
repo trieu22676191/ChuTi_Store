@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { FaMoneyBill } from "react-icons/fa";
 import AddressForm from "../components/AddressForm";
 import saleData from "../data/sale.json";
+import { OrderService } from "../services/OrderService";
 
 const Pay = () => {
   const location = useLocation();
@@ -26,6 +27,7 @@ const Pay = () => {
   const [appliedPromo, setAppliedPromo] = useState(null);
   const [showPromoInput, setShowPromoInput] = useState(false);
   const [showToast, setShowToast] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState("COD"); // Thêm state để quản lý phương thức thanh toán
 
   useEffect(() => {
     const state = location.state;
@@ -115,29 +117,75 @@ const Pay = () => {
   const shippingFee = SHIPPING_FEES[selectedDelivery];
   const total = subtotal + shippingFee - discountAmount;
 
-  const handleSubmitOrder = () => {
+  const handleSubmitOrder = async () => {
     if (!selectedAddress) {
       alert("Vui lòng chọn địa chỉ giao hàng");
       return;
     }
 
     try {
-      // Xóa sản phẩm đã đặt khỏi giỏ hàng
-      const cartItems = JSON.parse(localStorage.getItem("cart") || "[]"); // Sửa từ cartItems thành cart
+      const newOrder = {
+        id: `DH${Date.now()}`,
+        orderCode: Date.now().toString(),
+        date: new Date().toISOString(),
+        items: selectedItems,
+        address: selectedAddress,
+        note: note,
+        delivery: {
+          method: selectedDelivery,
+          fee: SHIPPING_FEES[selectedDelivery],
+        },
+        payment: {
+          method: paymentMethod,
+          status: "pending",
+        },
+        promo: appliedPromo,
+        subtotal: subtotal,
+        discount: discountAmount,
+        total: total,
+        status: "new",
+      };
+
+      // Gọi API lưu đơn hàng
+      await OrderService.saveOrder(newOrder);
+
+      // Xóa sản phẩm khỏi giỏ hàng
+      const cartItems = JSON.parse(localStorage.getItem("cart") || "[]");
       const updatedCart = cartItems.filter(
         (cartItem) => !selectedItems.some((item) => item.id === cartItem.id)
       );
-      localStorage.setItem("cart", JSON.stringify(updatedCart)); // Sửa từ cartItems thành cart
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
 
       // Hiển thị thông báo thành công
       setShowToast(true);
 
-      // Chuyển về trang chủ ngay lập tức
+      // Chuyển về trang chủ
       navigate("/", { replace: true });
     } catch (error) {
       console.error("Lỗi khi xử lý đơn hàng:", error);
       alert("Có lỗi xảy ra, vui lòng thử lại!");
     }
+  };
+
+  const handleProceedToCheckout = () => {
+    if (selected.length === 0) {
+      alert("Vui lòng chọn ít nhất một sản phẩm");
+      return;
+    }
+
+    const selectedItems = cart
+      .filter((item) => selected.includes(item.id))
+      .map((item) => ({
+        ...item,
+        priceAfterDiscount: item.price * (1 - (item.discount || 0) / 100),
+      }));
+
+    localStorage.setItem("selectedItems", JSON.stringify(selectedItems));
+
+    // Chuyển hướng ngay lập tức, không cần reload
+    navigate("/pay", {
+      state: { selectedItems },
+    });
   };
 
   return (
@@ -354,7 +402,8 @@ const Pay = () => {
                     <span>Thanh toán khi nhận hàng (COD)</span>
                   </div>
                 }
-                checked
+                checked={paymentMethod === "COD"}
+                onChange={() => setPaymentMethod("COD")}
               />
             </div>
           </div>

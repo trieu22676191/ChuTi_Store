@@ -80,8 +80,8 @@ const Home = () => {
           <Nav className="mx-auto">
             <Nav.Link href="/" className="custom-nav-link">DANH MỤC</Nav.Link>
             <Nav.Link href="/chutideals" className="custom-nav-link">CHUTI DEALS</Nav.Link>
-            <Nav.Link href="#" className="custom-nav-link">HOT DEALS</Nav.Link>
-            <Nav.Link href="#" className="custom-nav-link">THƯƠNG HIỆU</Nav.Link>
+            <Nav.Link href="/HotDeal" className="custom-nav-link">HOT DEALS</Nav.Link>
+            <Nav.Link href="/brand" className="custom-nav-link">THƯƠNG HIỆU</Nav.Link>
             <Nav.Link href="#" className="custom-nav-link">HÀNG MỚI VỀ</Nav.Link>
             <Nav.Link href="#" className="custom-nav-link">BÁN CHẠY</Nav.Link>
             <Nav.Link href="#" className="custom-nav-link">CLINIC & SPA</Nav.Link>

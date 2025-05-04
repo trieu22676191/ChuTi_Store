@@ -102,7 +102,7 @@ const FlashDeals = () => {
                       <div className="current-price-tag">
                         <span className="price-tag-bg"></span>
                         <span className="price-tag-text">
-                          {(product.price * (1 - product.discount)).toLocaleString()}₫
+                          {(product.price * (1 - product.discount / 100)).toLocaleString()}₫
                         </span>
 
                       </div>

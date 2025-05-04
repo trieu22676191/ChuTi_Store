@@ -24,6 +24,8 @@ import Address from "./components/Address";
 import Pay from "./pages/Pay";
 import HotDeal from "./pages/HotDeal";
 import MyOrder from "./pages/MyOrder";
+import NewProductsPage from "./pages/NewProductsPage";
+import BestSellingPage from "./pages/BestSellingPage";
 
 function AppContent() {
   const [showLogin, setShowLogin] = useState(false);
@@ -66,6 +68,8 @@ function AppContent() {
           <Route path="/pay" element={<Pay />} />
           <Route path="/my-order" element={<MyOrder />} />
           <Route path="/product/:id" element={<ProductDetail />} />
+          <Route path="/new-products" element={<NewProductsPage />} />
+          <Route path="/banchay" element={<BestSellingPage />} />
         </Routes>
       </main>
       <Login

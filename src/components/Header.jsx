@@ -334,7 +334,8 @@ const Header = () => {
                 <span style={{ fontSize: "14px" }}>Thương hiệu</span>
               </Nav.Link>
               <Nav.Link
-                href="#support"
+                as={Link}
+                to="/support"
                 className="text-white d-flex align-items-center gap-2 text-nowrap"
               >
                 <div

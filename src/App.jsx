@@ -27,6 +27,7 @@ import MyOrder from "./pages/MyOrder";
 import NewProductsPage from "./pages/NewProductsPage";
 import BestSellingPage from "./pages/BestSellingPage";
 import SearchResult from "./components/SearchResult";
+import Support from "./pages/Support";
 
 function AppContent() {
   const [showLogin, setShowLogin] = useState(false);
@@ -72,6 +73,7 @@ function AppContent() {
           <Route path="/new-products" element={<NewProductsPage />} />
           <Route path="/banchay" element={<BestSellingPage />} />
           <Route path="/search" element={<SearchResult />} />
+          <Route path="/support" element={<Support />} />
         </Routes>
       </main>
       <Login

@@ -31,6 +31,7 @@ const Header = () => {
   const [showSignup, setShowSignup] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState(null);
+  const [keyword, setKeyword] = useState("");
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
   const { cartCount } = useCart();
@@ -114,6 +115,14 @@ const Header = () => {
     navigate("/address");
   };
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (keyword.trim()) {
+      navigate(`/search?q=${encodeURIComponent(keyword.trim())}`);
+      setKeyword("");
+    }
+  };
+
   return (
     <>
       <Navbar bg="success" variant="dark" expand="lg" className="py-2">
@@ -151,6 +160,7 @@ const Header = () => {
             <Form
               className="d-flex position-relative mx-4"
               style={{ width: "60%" }}
+              onSubmit={handleSearch}
             >
               <FormControl
                 type="search"
@@ -166,11 +176,14 @@ const Header = () => {
                   fontSize: "14px",
                   boxShadow: "none",
                 }}
+                value={keyword}
+                onChange={(e) => setKeyword(e.target.value)}
               />
               <Button
                 variant="light"
                 className="position-absolute top-50 end-0 translate-middle-y me-3 border-0 bg-transparent"
                 style={{ zIndex: 10 }}
+                type="submit"
               >
                 <FaSearch className="text-secondary" size={18} />
               </Button>

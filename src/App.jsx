@@ -26,6 +26,7 @@ import HotDeal from "./pages/HotDeal";
 import MyOrder from "./pages/MyOrder";
 import NewProductsPage from "./pages/NewProductsPage";
 import BestSellingPage from "./pages/BestSellingPage";
+import SearchResult from "./components/SearchResult";
 
 function AppContent() {
   const [showLogin, setShowLogin] = useState(false);
@@ -70,6 +71,7 @@ function AppContent() {
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/new-products" element={<NewProductsPage />} />
           <Route path="/banchay" element={<BestSellingPage />} />
+          <Route path="/search" element={<SearchResult />} />
         </Routes>
       </main>
       <Login

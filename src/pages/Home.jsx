@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Nav, Navbar, Carousel } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import '../Css/Home/Home.css'; // 👈 Import CSS
+import '../Css/Home/Home.css';
 import '../Css/Home/ProductSlider.css';
 import FlashDeals from "../components/Home/FlashDeals";
 import Products from "../components/Home/Products";
@@ -12,7 +12,7 @@ const Home = () => {
   const [topSold, setTopSold] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [currentSearchPage, setCurrentSearchPage] = useState(0);
-  const productsPerPage = 6;
+  const productsPerPage = 5;
 
   useEffect(() => {
     fetch("http://localhost:3000/products")
@@ -202,11 +202,12 @@ const Home = () => {
 
       <div className="service-support">
         <div className="service-item">
-          <img src="/img/Quang Cao/Thanhtoan.png" alt="Thanh toán khi nhận hàng" />
-          <div className="service-text">
-            <h5>Thanh toán khi nhận hàng</h5>
-
-          </div>
+          <Link to="/huongdandathang" style={{ textDecoration: "none", color: "inherit" }}>
+            <img src="/img/Quang Cao/Thanhtoan.png" alt="Thanh toán khi nhận hàng" />
+            <div className="service-text">
+              <h5>Thanh toán khi nhận hàng</h5>
+            </div>
+          </Link>
         </div>
 
         <div className="service-item">

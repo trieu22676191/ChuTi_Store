@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Container, Nav, Navbar, Button } from "react-bootstrap";
 import { useCheckAddToCart } from "../context/CheckAddToCart";
 import { useCart } from "../context/CartContext";
@@ -31,6 +31,7 @@ const handleSendQuestion = async () => {
 
 const ProductDetail = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [selectedVariant, setSelectedVariant] = useState(0);
@@ -352,9 +353,13 @@ const ProductDetail = () => {
       <div>
         <div className="product-review-summary">
           <div className="product-review-average">
-            <div className="product-review-average-score">{reviewStats.avg}</div>
+            <div className="product-review-average-score">
+              {reviewStats.avg}
+            </div>
             <div className="product-review-average-star">★</div>
-            <div className="product-review-average-count">{reviewStats.total} nhận xét</div>
+            <div className="product-review-average-count">
+              {reviewStats.total} nhận xét
+            </div>
           </div>
           <div className="product-review-stars">
             {[5, 4, 3, 2, 1].map((star) => (
@@ -365,7 +370,8 @@ const ProductDetail = () => {
                     className="product-review-star-bar"
                     style={{
                       width: reviewStats.total
-                        ? (reviewStats.stars[star] / reviewStats.total) * 100 + "%"
+                        ? (reviewStats.stars[star] / reviewStats.total) * 100 +
+                          "%"
                         : 0,
                     }}
                   ></div>
@@ -381,7 +387,9 @@ const ProductDetail = () => {
                           ? "Không hài lòng"
                           : "Rất tệ"}
                 </span>
-                <span className="product-review-star-count">{reviewStats.stars[star]}</span>
+                <span className="product-review-star-count">
+                  {reviewStats.stars[star]}
+                </span>
               </div>
             ))}
           </div>
@@ -389,7 +397,9 @@ const ProductDetail = () => {
             <div className="product-review-comment-desc">
               Chia sẻ nhận xét của bạn về sản phẩm này
             </div>
-            <button className="product-review-comment-btn">Viết Bình luận</button>
+            <button className="product-review-comment-btn">
+              Viết Bình luận
+            </button>
           </div>
         </div>
         <div className="product-review-pagination-row">
@@ -464,7 +474,6 @@ const ProductDetail = () => {
     ),
     hoidap: (
       <div>
-
         <div className="product-review-pagination-row">
           <span>{questionCount} câu hỏi cho sản phẩm này</span>
           <div className="pagination">
@@ -493,7 +502,9 @@ const ProductDetail = () => {
               </button>
             ))}
             <button
-              onClick={() => setCurrentQPage((p) => Math.min(totalQPages, p + 1))}
+              onClick={() =>
+                setCurrentQPage((p) => Math.min(totalQPages, p + 1))
+              }
               disabled={currentQPage === totalQPages}
               style={{ marginLeft: 8 }}
             >
@@ -507,8 +518,10 @@ const ProductDetail = () => {
             className="question-input"
             placeholder="Bạn có câu hỏi với sản phẩm này? Đặt câu hỏi ngay."
             value={newQuestion}
-            onChange={e => setNewQuestion(e.target.value)}
-            onKeyDown={e => { if (e.key === 'Enter') handleSendQuestion(); }}
+            onChange={(e) => setNewQuestion(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") handleSendQuestion();
+            }}
           />
           <button className="question-send-btn" onClick={handleSendQuestion}>
             Gửi
@@ -544,30 +557,51 @@ const ProductDetail = () => {
         </div>
         {/* Sản phẩm gợi ý */}
         <div style={{ marginTop: 48 }}>
-          <h3 style={{ color: "#3E8754", fontWeight: 700, fontSize: 22, marginBottom: 24 }}>Sản phẩm gợi ý</h3>
+          <h3
+            style={{
+              color: "#3E8754",
+              fontWeight: 700,
+              fontSize: 22,
+              marginBottom: 24,
+            }}
+          >
+            Sản phẩm gợi ý
+          </h3>
           <ProductGrid products={suggestedProducts} />
           {/* Dịch vụ hỗ trợ */}
           <div className="service-support" style={{ marginTop: 32, marginBottom: 0 }}>
             <div className="service-item">
-              <img src="/img/Quang Cao/Thanhtoan.png" alt="Thanh toán khi nhận hàng" />
+              <img
+                src="/img/Quang Cao/Thanhtoan.png"
+                alt="Thanh toán khi nhận hàng"
+              />
               <div className="service-text">
                 <h5>Thanh toán khi nhận hàng</h5>
               </div>
             </div>
             <div className="service-item">
-              <img src="/img/Quang Cao/FreeShip.png" alt="Giao nhanh miễn phí 2H" />
+              <img
+                src="/img/Quang Cao/FreeShip.png"
+                alt="Giao nhanh miễn phí 2H"
+              />
               <div className="service-text">
                 <h5>Giao nhanh miễn phí 24H</h5>
               </div>
             </div>
             <div className="service-item">
-              <img src="/img/Quang Cao/TraHang.png" alt="30 ngày đổi trả miễn phí" />
+              <img
+                src="/img/Quang Cao/TraHang.png"
+                alt="30 ngày đổi trả miễn phí"
+              />
               <div className="service-text">
                 <h5>30 ngày đổi trả miễn phí</h5>
               </div>
             </div>
             <div className="service-item">
-              <img src="/img/Quang Cao/UyTin.png" alt="Thương hiệu uy tín toàn cầu" />
+              <img
+                src="/img/Quang Cao/UyTin.png"
+                alt="Thương hiệu uy tín toàn cầu"
+              />
               <div className="service-text">
                 <h5>Thương hiệu uy tín toàn cầu</h5>
               </div>
@@ -647,12 +681,17 @@ const ProductDetail = () => {
         setQuestionUsers(userMap);
       });
     // Fetch sản phẩm gợi ý (cùng loại, trừ sản phẩm hiện tại)
-    fetch('http://localhost:3000/products')
-      .then(res => res.json())
-      .then(data => {
+    fetch("http://localhost:3000/products")
+      .then((res) => res.json())
+      .then((data) => {
         if (product) {
           // Lọc sản phẩm cùng brand hoặc cùng loại, loại bỏ sản phẩm hiện tại
-          const filtered = data.filter(p => p.id !== Number(id) && (p.brand === product.brand || p.types?.some(type => product.types?.includes(type))));
+          const filtered = data.filter(
+            (p) =>
+              p.id !== Number(id) &&
+              (p.brand === product.brand ||
+                p.types?.some((type) => product.types?.includes(type)))
+          );
           setSuggestedProducts(filtered.slice(0, 8)); // lấy tối đa 8 sản phẩm gợi ý
         }
       });
@@ -1055,6 +1094,7 @@ const ProductDetail = () => {
             </div>
             <div style={{ display: "flex", gap: 12, marginBottom: 16 }}>
               <Button
+                onClick={handleBuyNow}
                 style={{
                   background: "#e53935",
                   border: "none",

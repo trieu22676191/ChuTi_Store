@@ -28,6 +28,8 @@ import NewProductsPage from "./pages/NewProductsPage";
 import BestSellingPage from "./pages/BestSellingPage";
 import SearchResult from "./components/SearchResult";
 import Support from "./pages/Support";
+import FavoriteProducts from "./pages/FavoriteProducts";
+import HuongDanDatHang from "./pages/HuongDanDatHang";
 
 function AppContent() {
   const [showLogin, setShowLogin] = useState(false);
@@ -74,6 +76,8 @@ function AppContent() {
           <Route path="/banchay" element={<BestSellingPage />} />
           <Route path="/search" element={<SearchResult />} />
           <Route path="/support" element={<Support />} />
+          <Route path="/yeu-thich" element={<FavoriteProducts />} />
+          <Route path= "/huongdandathang" element={<HuongDanDatHang/>}/>
         </Routes>
       </main>
       <Login

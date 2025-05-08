@@ -326,3 +326,34 @@
   }
 }
 
+.service-item {
+  display: flex;
+  flex-direction: column; /* Sắp xếp theo chiều dọc */
+  align-items: center; /* Căn giữa theo chiều ngang */
+  justify-content: center; /* Căn giữa theo chiều dọc */
+  text-align: center; /* Căn giữa nội dung văn bản */
+  padding: 16px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.service-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.service-item img {
+  width: 80px; /* Đặt kích thước cố định cho hình ảnh */
+  height: 80px;
+  object-fit: contain; /* Đảm bảo hình ảnh không bị méo */
+  margin-bottom: 12px; /* Khoảng cách giữa hình ảnh và văn bản */
+}
+
+.service-text {
+  font-size: 14px;
+  color: #333;
+  font-weight: bold;
+}
+

@@ -115,6 +115,10 @@ const Header = () => {
     navigate("/address");
   };
 
+  const handleFavoriteClick = () => {
+    navigate("/yeu-thich");
+  };
+
   const handleSearch = (e) => {
     e.preventDefault();
     if (keyword.trim()) {
@@ -289,7 +293,7 @@ const Header = () => {
                       <FaClipboardList className="me-2" />
                       Quản lý đơn hàng
                     </Dropdown.Item>
-                    <Dropdown.Item>
+                    <Dropdown.Item onClick={handleFavoriteClick}>
                       <FaHeart className="me-2" />
                       Sản phẩm yêu thích
                     </Dropdown.Item>

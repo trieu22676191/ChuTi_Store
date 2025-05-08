@@ -77,7 +77,7 @@ const Support = () => {
                   <ul className="list-unstyled mb-0">
                     <li className="mb-3">
                       <a href="#" className="text-decoration-none text-dark">
-                        Đăng ký thành viên Hasaki như thế nào?
+                        Đăng ký thành viên ChuTi như thế nào?
                       </a>
                     </li>
                     <li className="mb-3">
@@ -106,7 +106,7 @@ const Support = () => {
                     </li>
                     <li className="mb-3">
                       <a href="#" className="text-decoration-none text-dark">
-                        Khám da tại spa Hasaki có tốn phí hay không?
+                        Khám da tại spa ChuTi có tốn phí hay không?
                       </a>
                     </li>
                   </ul>
@@ -128,7 +128,7 @@ const Support = () => {
                           href="#"
                           className="text-decoration-none text-secondary"
                         >
-                          Giới thiệu Hasaki
+                          Giới thiệu ChuTi
                         </a>
                       </li>
                       <li>
@@ -152,7 +152,7 @@ const Support = () => {
                           href="#"
                           className="text-decoration-none text-secondary"
                         >
-                          Phiếu mua hàng Hasaki
+                          Phiếu mua hàng ChuTi
                         </a>
                       </li>
                     </ul>
@@ -191,7 +191,7 @@ const Support = () => {
                           href="#"
                           className="text-decoration-none text-secondary"
                         >
-                          Hướng dẫn tải & sử dụng App Hasaki
+                          Hướng dẫn tải & sử dụng App ChuTi
                         </a>
                       </li>
                     </ul>

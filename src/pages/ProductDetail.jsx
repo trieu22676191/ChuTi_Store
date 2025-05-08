@@ -5,6 +5,9 @@ import { useCheckAddToCart } from "../context/CheckAddToCart";
 import { useCart } from "../context/CartContext";
 import "../Css/Chi Tiet San Pham/ProductDetail.css";
 import ProductGrid from '../components/Home/ProductGrid';
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const mockThumbs = [
   "/img/San Pham/SP1.jpg",
@@ -72,6 +75,7 @@ const ProductDetail = () => {
   const [questionUsers, setQuestionUsers] = useState({});
   const [newQuestion, setNewQuestion] = useState("");
   const [suggestedProducts, setSuggestedProducts] = useState([]);
+  const [notification, setNotification] = useState(null); // Trạng thái thông báo
 
   const tabContent = {
     mota: product && (
@@ -370,12 +374,12 @@ const ProductDetail = () => {
                   {star === 5
                     ? "Rất hài lòng"
                     : star === 4
-                    ? "Hài lòng"
-                    : star === 3
-                    ? "Bình thường"
-                    : star === 2
-                    ? "Không hài lòng"
-                    : "Rất tệ"}
+                      ? "Hài lòng"
+                      : star === 3
+                        ? "Bình thường"
+                        : star === 2
+                          ? "Không hài lòng"
+                          : "Rất tệ"}
                 </span>
                 <span className="product-review-star-count">{reviewStats.stars[star]}</span>
               </div>
@@ -460,7 +464,7 @@ const ProductDetail = () => {
     ),
     hoidap: (
       <div>
-        
+
         <div className="product-review-pagination-row">
           <span>{questionCount} câu hỏi cho sản phẩm này</span>
           <div className="pagination">
@@ -543,7 +547,7 @@ const ProductDetail = () => {
           <h3 style={{ color: "#3E8754", fontWeight: 700, fontSize: 22, marginBottom: 24 }}>Sản phẩm gợi ý</h3>
           <ProductGrid products={suggestedProducts} />
           {/* Dịch vụ hỗ trợ */}
-          <div className="service-support" style={{marginTop: 32, marginBottom: 0}}>
+          <div className="service-support" style={{ marginTop: 32, marginBottom: 0 }}>
             <div className="service-item">
               <img src="/img/Quang Cao/Thanhtoan.png" alt="Thanh toán khi nhận hàng" />
               <div className="service-text">
@@ -698,6 +702,48 @@ const ProductDetail = () => {
     handleAddToCart(addToCart, productToAdd);
   };
 
+  // Hàm thêm vào yêu thích
+  const handleAddToFavorite = async () => {
+    const user = JSON.parse(localStorage.getItem("loggedInUser"));
+    if (!user) {
+      toast.error("Vui lòng đăng nhập");
+      return;
+    }
+    const name = user.fullName; // hoặc user.userId, tuỳ cấu trúc của bạn
+    const productId = product.id; // hoặc id_SP
+
+    // Kiểm tra đã có trong danh sách yêu thích chưa
+    const res = await axios.get(`http://localhost:3000/likeproduct?id_user=${name}&id_SP=${productId}`);
+    if (res.data.length > 0) {
+      toast.warning("Sản phẩm đã có trong danh sách yêu thích!");
+      return;
+    }
+
+    // Thêm mới
+    await axios.post("http://localhost:3000/likeproduct", {
+      user_name: name,   // id của user đăng nhập
+      id_SP: productId,       // id sản phẩm
+      date: new Date().toISOString().slice(0, 10)
+    });
+
+    toast.success("Đã thêm vào danh sách yêu thích!");
+  };
+
+  // Tự động ẩn thông báo sau 3 giây
+  // useEffect(() => {
+  //   // Chỉ chạy khi notification có giá trị
+  //   if (!notification) return;
+
+  //   const timer = setTimeout(() => {
+  //     setNotification(null); // Xóa thông báo sau 3 giây
+  //   }, 3000);
+
+  //   // Dọn dẹp timer nếu component unmount hoặc notification thay đổi
+  //   return () => {
+  //     clearTimeout(timer);
+  //   };
+  // }, [notification]);
+
   return (
     <Container
       fluid
@@ -707,20 +753,20 @@ const ProductDetail = () => {
       <div style={{ width: "90%", margin: "0 auto" }}>
         {/* Navbar giữ nguyên như Home.jsx */}
         <Navbar expand="lg" className="custom-navbar">
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mx-auto">
-            <Nav.Link href="/" className="custom-nav-link">TRANG CHỦ</Nav.Link>
-            <Nav.Link href="/chutideals" className="custom-nav-link">CHUTI DEALS</Nav.Link>
-            <Nav.Link href="/HotDeal" className="custom-nav-link">HOT DEALS</Nav.Link>
-            <Nav.Link href="/brand" className="custom-nav-link">THƯƠNG HIỆU</Nav.Link>
-            <Nav.Link href="/new-products" className="custom-nav-link">HÀNG MỚI VỀ</Nav.Link>
-            <Nav.Link href="/banchay" className="custom-nav-link">BÁN CHẠY</Nav.Link>
-            <Nav.Link href="#" className="custom-nav-link">CLINIC & SPA</Nav.Link>
-            <Nav.Link href="#" className="custom-nav-link">DERMAHAIR</Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="mx-auto">
+              <Nav.Link href="/" className="custom-nav-link">TRANG CHỦ</Nav.Link>
+              <Nav.Link href="/chutideals" className="custom-nav-link">CHUTI DEALS</Nav.Link>
+              <Nav.Link href="/HotDeal" className="custom-nav-link">HOT DEALS</Nav.Link>
+              <Nav.Link href="/brand" className="custom-nav-link">THƯƠNG HIỆU</Nav.Link>
+              <Nav.Link href="/new-products" className="custom-nav-link">HÀNG MỚI VỀ</Nav.Link>
+              <Nav.Link href="/banchay" className="custom-nav-link">BÁN CHẠY</Nav.Link>
+              <Nav.Link href="#" className="custom-nav-link">CLINIC & SPA</Nav.Link>
+              <Nav.Link href="#" className="custom-nav-link">DERMAHAIR</Nav.Link>
+            </Nav>
+          </Navbar.Collapse>
+        </Navbar>
 
         <div
           style={{
@@ -992,6 +1038,7 @@ const ProductDetail = () => {
                   e.currentTarget.style.color = "#e53935";
                   e.currentTarget.querySelector("img").style.filter = "none";
                 }}
+                onClick={handleAddToFavorite}
               >
                 <img
                   src="/img/ChiTietSanPham/heart.png"
@@ -1244,9 +1291,37 @@ const ProductDetail = () => {
           </div>
         </div>
       </div>
-      
+      {/* Thông báo */}
+      {notification && (
+        <div
+          style={{
+            position: "fixed",
+            top: 20,
+            right: 20,
+            background: notification.type === "success" ? "#4caf50" : notification.type === "warning" ? "#ff9800" : "#f44336",
+            color: "#fff",
+            padding: "10px 20px",
+            borderRadius: "8px",
+            boxShadow: "0 2px 5px rgba(0, 0, 0, 0.2)",
+            zIndex: 1000,
+          }}
+        >
+          {notification.message}
+        </div>
+      )}
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </Container>
-    
+
   );
 };
 

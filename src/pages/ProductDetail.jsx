@@ -768,20 +768,26 @@ const ProductDetail = () => {
     toast.success("Đã thêm vào danh sách yêu thích!");
   };
 
-  // Tự động ẩn thông báo sau 3 giây
-  // useEffect(() => {
-  //   // Chỉ chạy khi notification có giá trị
-  //   if (!notification) return;
+  const handleBuyNow = () => {
+    const productToCheckout = [
+      {
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+        variant: product.types?.[selectedVariant],
+        discount: product.discount,
+        quantity: quantity,
+        priceAfterDiscount: product.price * (1 - (product.discount || 0) / 100),
+      },
+    ];
 
-  //   const timer = setTimeout(() => {
-  //     setNotification(null); // Xóa thông báo sau 3 giây
-  //   }, 3000);
-
-  //   // Dọn dẹp timer nếu component unmount hoặc notification thay đổi
-  //   return () => {
-  //     clearTimeout(timer);
-  //   };
-  // }, [notification]);
+    navigate("/pay", {
+      state: {
+        selectedItems: productToCheckout,
+      },
+    });
+  };
 
   return (
     <Container

@@ -30,6 +30,10 @@ import SearchResult from "./components/SearchResult";
 import Support from "./pages/Support";
 import FavoriteProducts from "./pages/FavoriteProducts";
 import HuongDanDatHang from "./pages/HuongDanDatHang";
+import Vanchuyen from "./pages/Vanchuyen";
+import Chinhsachdoitra from "./pages/Chinhsachdoitra";
+import ChiTietHotDeal from "./pages/ChiTietHotDeal";
+import ChiTietDanhMuc from "./pages/ChiTietDanhMuc";
 
 function AppContent() {
   const [showLogin, setShowLogin] = useState(false);
@@ -78,6 +82,10 @@ function AppContent() {
           <Route path="/support" element={<Support />} />
           <Route path="/yeu-thich" element={<FavoriteProducts />} />
           <Route path= "/huongdandathang" element={<HuongDanDatHang/>}/>
+          <Route path="/giaonhanh" element={<Vanchuyen />}/>
+          <Route path="/chinhsachdoitra" element={<Chinhsachdoitra />}/>
+          <Route path="/chi-tiet-hot-deal/:id" element={<ChiTietHotDeal />} />
+          <Route path="/chitietdanhmuc" element={<ChiTietDanhMuc />} />
         </Routes>
       </main>
       <Login

@@ -33,14 +33,14 @@ const Home = () => {
   }, []);
 
   const services = [
-    { icon: "/img/Quang Cao/ChamSocDa.png", text: "Chăm Sóc Da" },
-    { icon: "/img/Quang Cao/Kem.png", text: "Kem Body" },
-    { icon: "/img/Quang Cao/MatNa.png", text: "Mặt Nạ" },
-    { icon: "/img/Quang Cao/NuocHoa.png", text: "Nước Hoa" },
-    { icon: "/img/Quang Cao/Serum.png", text: "SeRum" },
-    { icon: "/img/Quang Cao/SonMoi.png", text: "Son Môi" },
-    { icon: "/img/Quang Cao/SuaTam.png", text: "Sữa Tắm" },
-    { icon: "/img/Quang Cao/TrangDiem.png", text: "Trang Điểm" }
+    { icon: "/img/Quang Cao/ChamSocDa.png", text: "Chăm Sóc Da" ,category:"skincare"},
+    { icon: "/img/Quang Cao/Kem.png", text: "Kem Body", category:"moisturizer" },
+    { icon: "/img/Quang Cao/MatNa.png", text: "Mặt Nạ", category:"mask" },
+    { icon: "/img/Quang Cao/NuocHoa.png", text: "Nước Hoa", category:"mist" },
+    { icon: "/img/Quang Cao/Serum.png", text: "SeRum", category:"serum" },
+    { icon: "/img/Quang Cao/SonMoi.png", text: "Son Môi", category:"lipcare" },
+    { icon: "/img/Quang Cao/SuaTam.png", text: "Sữa Tắm", category:"cleanser"},
+    { icon: "/img/Quang Cao/TrangDiem.png", text: "Trang Điểm" ,category:"toner" },
   ];
 
   const formatPrice = (price) =>
@@ -78,14 +78,21 @@ const Home = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mx-auto">
-            <Nav.Link href="/" className="custom-nav-link">TRANG CHỦ</Nav.Link>
+            <Nav.Link
+              href="/"
+              className="custom-nav-link"
+              onClick={(event) => {
+                window.scrollTo({ top: 0, behavior: "smooth" }); // Cuộn lên đầu trang
+              }}
+            >
+              TRANG CHỦ
+            </Nav.Link>
             <Nav.Link href="/chutideals" className="custom-nav-link">CHUTI DEALS</Nav.Link>
             <Nav.Link href="/HotDeal" className="custom-nav-link">HOT DEALS</Nav.Link>
             <Nav.Link href="/brand" className="custom-nav-link">THƯƠNG HIỆU</Nav.Link>
             <Nav.Link href="/new-products" className="custom-nav-link">HÀNG MỚI VỀ</Nav.Link>
             <Nav.Link href="/banchay" className="custom-nav-link">BÁN CHẠY</Nav.Link>
-            <Nav.Link href="#" className="custom-nav-link">CLINIC & SPA</Nav.Link>
-            <Nav.Link href="#" className="custom-nav-link">DERMAHAIR</Nav.Link>
+
           </Nav>
         </Navbar.Collapse>
       </Navbar>
@@ -96,16 +103,36 @@ const Home = () => {
           nextIcon={<span className="carousel-next-icon">›</span>}
         >
           <Carousel.Item>
-            <Link to="/promotion1">
+            <Link
+              to={{
+                pathname: "/chi-tiet-hot-deal/1",
+              }}
+              state={{
+                block: {
+                  title: "Làm đẹp công nghệ cao",
+                  img: "/img/Quang Cao/anh quang cao 1.jpg",
+                },
+              }}
+            >
               <img
                 className="d-block w-100 carousel-image"
-                src="/img/Quang Cao/anh quang cao 1.jpg" // 👈 Đưa vào public để không cần import
+                src="/img/Quang Cao/anh quang cao 1.jpg"
                 alt="First slide"
               />
             </Link>
           </Carousel.Item>
           <Carousel.Item>
-            <Link to="/promotion2">
+            <Link
+              to={{
+                pathname: "/chi-tiet-hot-deal/2",
+              }}
+              state={{
+                block: {
+                  title: "Trải nghiệm triệt lông Diode Laser",
+                  img: "/img/Quang Cao/anh quang cao 2.jpg",
+                },
+              }}
+            >
               <img
                 className="d-block w-100 carousel-image"
                 src="/img/Quang Cao/anh quang cao 2.jpg"
@@ -114,7 +141,17 @@ const Home = () => {
             </Link>
           </Carousel.Item>
           <Carousel.Item>
-            <Link to="/promotion3">
+            <Link
+              to={{
+                pathname: "/chi-tiet-hot-deal/3",
+              }}
+              state={{
+                block: {
+                  title: "Deal sốc chỉ từ 2K",
+                  img: "/img/Quang Cao/anh quang cao 3.jpg",
+                },
+              }}
+            >
               <img
                 className="d-block w-100 carousel-image"
                 src="/img/Quang Cao/anh quang cao 3.jpg"
@@ -131,8 +168,19 @@ const Home = () => {
         <ul className="service-list">
           {services.map((service, index) => (
             <li key={index} className="service-item">
-              <img src={service.icon} alt={service.text} className="service-icon" />
-              <p className="service-text">{service.text}</p>
+              <Link
+                to={{
+                  pathname: "/chitietdanhmuc",
+                }}
+                state={{
+                  category: service.category, // Truyền danh mục
+                  name: service.text,         // Truyền tên danh mục
+                }}
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
+                <img src={service.icon} alt={service.text} className="service-icon" />
+                <p className="service-text">{service.text}</p>
+              </Link>
             </li>
           ))}
         </ul>
@@ -143,7 +191,7 @@ const Home = () => {
       {/* Top bán chạy */}
       <h2 style={{ color: '#198754', marginTop: 40, fontSize: 20, fontWeight: "bold", marginLeft: 75 }}>Top bán chạy</h2>
       <div className="product-slider-container">
-        <div className="product-list">
+        <div style={{display: "flex",justifyContent: "center", marginLeft:50}} className="product-list">
           {currentProducts.map((sp) => (
             <Link to={`/product/${sp.id}`} key={sp.id} className="product-card">
               <img src={sp.image} alt={sp.name} />
@@ -172,7 +220,7 @@ const Home = () => {
       {/* Top tìm kiếm */}
       <h2 style={{ color: '#198754', marginTop: 40, fontSize: 20, fontWeight: "bold", marginLeft: 75 }}>Top tìm kiếm</h2>
       <div className="product-slider-container">
-        <div className="product-list">
+        <div style={{display: "flex",justifyContent: "center", marginLeft:50}} className="product-list">
           {currentSearchProducts.map((sp) => (
             <Link to={`/product/${sp.id}`} key={sp.id} className="product-card">
               <img src={sp.image} alt={sp.name} />
@@ -211,24 +259,30 @@ const Home = () => {
         </div>
 
         <div className="service-item">
-          <img src="/img/Quang Cao/FreeShip.png" alt="Giao nhanh miễn phí 2H" />
-          <div className="service-text">
-            <h5>Giao nhanh miễn phí 24H</h5>
-          </div>
+          <Link to="/giaonhanh" style={{ textDecoration: "none", color: "inherit" }}>
+            <img src="/img/Quang Cao/FreeShip.png" alt="Giao nhanh miễn phí 2H" />
+            <div className="service-text">
+              <h5>Giao nhanh miễn phí 24H</h5>
+            </div>
+            </Link>
         </div>
 
         <div className="service-item">
+        <Link to="/chinhsachdoitra" style={{ textDecoration: "none", color: "inherit" }}>
           <img src="/img/Quang Cao/TraHang.png" alt="30 ngày đổi trả miễn phí" />
           <div className="service-text">
             <h5>30 ngày đổi trả miễn phí</h5>
           </div>
+          </Link>
         </div>
 
         <div className="service-item">
+        <Link to="/gioi-thieu" style={{ textDecoration: "none", color: "inherit" }}>
           <img src="/img/Quang Cao/UyTin.png" alt="Thương hiệu uy tín toàn cầu" />
           <div className="service-text">
             <h5>Thương hiệu uy tín toàn cầu</h5>
           </div>
+          </Link>
         </div>
 
         <div className="service-item">

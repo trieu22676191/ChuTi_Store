@@ -3,6 +3,7 @@ import { Container, Nav, Navbar } from 'react-bootstrap';
 import { FaBolt } from 'react-icons/fa';
 import Products from '../components/Home/Products';
 import '../Css/ChuTiDeals.css';
+import { Link } from "react-router-dom"; // Import Link từ react-router-dom
 
 const DEAL_HOURS = ["09:00", "13:00", "17:00", "22:00"];
 
@@ -89,10 +90,9 @@ const ChuTiDeals = () => {
 
   // Cuộn lên đầu trang khi tab thay đổi
   useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
+    if (selectedTab) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   }, [selectedTab]);
 
   return (
@@ -101,14 +101,22 @@ const ChuTiDeals = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mx-auto">
-            <Nav.Link href="/" className="custom-nav-link">TRANG CHỦ</Nav.Link>
+            <Nav.Link
+              href="/"
+              className="custom-nav-link"
+              onClick={(event) => {
+                // Không cần ngăn hành vi mặc định
+                window.scrollTo({ top: 0, behavior: "smooth" }); // Cuộn lên đầu trang
+              }}
+            >
+              TRANG CHỦ
+            </Nav.Link>
             <Nav.Link href="/chutideals" className="custom-nav-link">CHUTI DEALS</Nav.Link>
             <Nav.Link href="/HotDeal" className="custom-nav-link">HOT DEALS</Nav.Link>
             <Nav.Link href="/brand" className="custom-nav-link">THƯƠNG HIỆU</Nav.Link>
             <Nav.Link href="/new-products" className="custom-nav-link">HÀNG MỚI VỀ</Nav.Link>
             <Nav.Link href="/banchay" className="custom-nav-link">BÁN CHẠY</Nav.Link>
-            <Nav.Link href="#" className="custom-nav-link">CLINIC & SPA</Nav.Link>
-            <Nav.Link href="#" className="custom-nav-link">DERMAHAIR</Nav.Link>
+
           </Nav>
         </Navbar.Collapse>
       </Navbar>
@@ -279,4 +287,4 @@ const ChuTiDeals = () => {
   );
 };
 
-export default ChuTiDeals; 
+export default ChuTiDeals;

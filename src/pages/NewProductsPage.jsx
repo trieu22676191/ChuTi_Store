@@ -104,8 +104,6 @@ const NewProductsPage = () => {
             <Nav.Link href="/brand" className="custom-nav-link">THƯƠNG HIỆU</Nav.Link>
             <Nav.Link href="/new-products" className="custom-nav-link">HÀNG MỚI VỀ</Nav.Link>
             <Nav.Link href="/banchay" className="custom-nav-link">BÁN CHẠY</Nav.Link>
-            <Nav.Link href="#" className="custom-nav-link">CLINIC & SPA</Nav.Link>
-            <Nav.Link href="#" className="custom-nav-link">DERMAHAIR</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

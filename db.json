@@ -6313,43 +6313,54 @@
       "id": "657f"
     }
   ],
-  "orders": [],
+  "orders": [
+    {
+      "id": "DH1746769857258",
+      "orderCode": "1746769857258",
+      "date": "2025-05-09T05:50:57.258Z",
+      "items": [
+        {
+          "id": "4",
+          "name": "Serum Vitamin C Melano CC",
+          "price": 250000,
+          "image": "/img/San Pham/SP4.jpg",
+          "variant": "Vàng",
+          "discount": 20,
+          "quantity": 1,
+          "priceAfterDiscount": 200000
+        }
+      ],
+      "address": {
+        "name": "Nguyen  Tien",
+        "phone": "0917936731",
+        "city": "Tỉnh Thái Nguyên",
+        "district": "Huyện Võ Nhai",
+        "ward": "Xã Liên Minh",
+        "address": "232",
+        "isDefault": true
+      },
+      "note": "",
+      "delivery": {
+        "method": "standard",
+        "fee": 10000
+      },
+      "payment": {
+        "method": "COD",
+        "status": "pending"
+      },
+      "promo": null,
+      "subtotal": 250000,
+      "discount": 0,
+      "total": 260000,
+      "status": "new"
+    }
+  ],
   "likeproduct": [
     {
-      "id": "119b",
+      "id": "4d71",
       "user_name": "KO",
-      "id_SP": "16",
-      "date": "2025-05-08"
-    },
-    {
-      "id": "260e",
-      "user_name": "KO",
-      "id_SP": "5",
-      "date": "2025-05-08"
-    },
-    {
-      "id": "dce4",
-      "user_name": "KO",
-      "id_SP": "6",
-      "date": "2025-05-08"
-    },
-    {
-      "id": "7eed",
-      "user_name": "KO",
-      "id_SP": "3",
-      "date": "2025-05-08"
-    },
-    {
-      "id": "a8a6",
-      "user_name": "KO",
-      "id_SP": "19",
-      "date": "2025-05-08"
-    },
-    {
-      "id": "a23e",
-      "user_name": "KO",
-      "id_SP": "11",
-      "date": "2025-05-08"
+      "id_SP": "9",
+      "date": "2025-05-09"
     }
   ]
 }

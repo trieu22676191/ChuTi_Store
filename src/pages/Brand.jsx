@@ -25,8 +25,8 @@ const Brand = () => {
     activeLetter === "ALL"
       ? brands
       : brands.filter(
-          (brand) => brand.charAt(0).toUpperCase() === activeLetter
-        );
+        (brand) => brand.charAt(0).toUpperCase() === activeLetter
+      );
 
   // Tạo object nhóm brands theo chữ cái
   const groupedBrands = brands.reduce((acc, brand) => {
@@ -125,14 +125,12 @@ const Brand = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mx-auto">
-            <Nav.Link href="/" className="custom-nav-link">DANH MỤC</Nav.Link>
+            <Nav.Link href="/" className="custom-nav-link">TRANG CHỦ</Nav.Link>
             <Nav.Link href="/chutideals" className="custom-nav-link">CHUTI DEALS</Nav.Link>
             <Nav.Link href="/HotDeal" className="custom-nav-link">HOT DEALS</Nav.Link>
             <Nav.Link href="/brand" className="custom-nav-link">THƯƠNG HIỆU</Nav.Link>
-            <Nav.Link href="#" className="custom-nav-link">HÀNG MỚI VỀ</Nav.Link>
-            <Nav.Link href="#" className="custom-nav-link">BÁN CHẠY</Nav.Link>
-            <Nav.Link href="#" className="custom-nav-link">CLINIC & SPA</Nav.Link>
-            <Nav.Link href="#" className="custom-nav-link">DERMAHAIR</Nav.Link>
+            <Nav.Link href="/new-products" className="custom-nav-link">HÀNG MỚI VỀ</Nav.Link>
+            <Nav.Link href="/banchay" className="custom-nav-link">BÁN CHẠY</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

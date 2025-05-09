@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Navbar, Nav } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { brandImages } from "../data/brandImages";
 
 const Brand = () => {
@@ -175,6 +176,60 @@ const Brand = () => {
             <h3 className="mb-4">{activeLetter}</h3>
           )}
           {renderBrands()}
+        </div>
+        
+        <div className="service-support" style={{ display: "flex", flexWrap: "wrap", gap: "16px", justifyContent: "space-between" }}>
+          <div className="service-item">
+            <Link to="/huongdandathang" style={{ textDecoration: "none", color: "inherit" }}>
+              <img src="/img/Quang Cao/Thanhtoan.png" alt="Thanh toán khi nhận hàng" />
+              <div className="service-text">
+                <h5>Hướng dẫn thanh toán</h5>
+              </div>
+            </Link>
+          </div>
+
+          <div className="service-item">
+            <Link to="/giaonhanh" style={{ textDecoration: "none", color: "inherit" }}>
+              <img src="/img/Quang Cao/FreeShip.png" alt="Giao nhanh miễn phí 2H" />
+              <div className="service-text">
+                <h5>Giao nhanh miễn phí 24H</h5>
+              </div>
+            </Link>
+          </div>
+
+          <div className="service-item">
+            <Link to="/chinhsachdoitra" style={{ textDecoration: "none", color: "inherit" }}>
+              <img src="/img/Quang Cao/TraHang.png" alt="30 ngày đổi trả miễn phí" />
+              <div className="service-text">
+                <h5>30 ngày đổi trả miễn phí</h5>
+              </div>
+            </Link>
+          </div>
+
+          <div className="service-item">
+            <Link to="/gioi-thieu" style={{ textDecoration: "none", color: "inherit" }}>
+              <img src="/img/Quang Cao/UyTin.png" alt="Thương hiệu uy tín toàn cầu" />
+              <div className="service-text">
+                <h5>Thương hiệu uy tín toàn cầu</h5>
+              </div>
+            </Link>
+          </div>
+
+          <div className="service-item">
+            <img src="/img/Quang Cao/HotLine.png" alt="Hotline CSKH" />
+            <div className="service-text">
+              <h5>HOTLINE CSKH</h5>
+              <h5>1800 6324</h5>
+            </div>
+          </div>
+
+          <div className="service-item">
+            <img src="/img/Quang Cao/Location.png" alt="Tìm chi nhánh" />
+            <div className="service-text">
+              <h5>TÌM CHI NHÁNH</h5>
+              <h5>Hệ thống ChuTi</h5>
+            </div>
+          </div>
         </div>
       </Container>
     </>

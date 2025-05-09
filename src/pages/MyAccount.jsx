@@ -9,6 +9,8 @@ import {
   FaFacebook,
   FaGoogle,
 } from "react-icons/fa";
+import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
 
 const MyAccount = () => {
   const navigate = useNavigate();
@@ -201,295 +203,321 @@ const MyAccount = () => {
   console.log("Current userData state:", userData);
 
   return (
-    <Container className="py-4">
-      {showSuccess && (
-        <div className="alert alert-success">
-          Cập nhật thông tin thành công!
-        </div>
-      )}
-
-      <div className="bg-white p-4 rounded shadow-sm">
-        <h4 className="mb-4">Thông tin tài khoản</h4>
-
-        <div className="mb-4">
-          <div className="d-flex align-items-center mb-3">
-            <div
-              className="avatar-container me-3"
-              style={{
-                cursor: "pointer",
-                position: "relative",
-                width: "100px",
-                height: "100px",
-                borderRadius: "50%",
-                overflow: "hidden",
-                backgroundColor: "#f8f9fa",
+    <>
+      {/* Thêm Navbar ở đây */}
+      <Navbar expand="lg" className="custom-navbar">
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="mx-auto">
+            <Nav.Link
+              href="/"
+              className="custom-nav-link"
+              onClick={(event) => {
+                window.scrollTo({ top: 0, behavior: "smooth" }); // Cuộn lên đầu trang
               }}
-              onClick={handleAvatarClick}
             >
-              {avatar ? (
-                <img
-                  src={avatar}
-                  alt="Avatar"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                  }}
-                />
-              ) : (
-                <FaUser
-                  size={50}
-                  className="text-secondary"
-                  style={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
-                />
-              )}
+              TRANG CHỦ
+            </Nav.Link>
+            <Nav.Link href="/chutideals" className="custom-nav-link">CHUTI DEALS</Nav.Link>
+            <Nav.Link href="/HotDeal" className="custom-nav-link">HOT DEALS</Nav.Link>
+            <Nav.Link href="/brand" className="custom-nav-link">THƯƠNG HIỆU</Nav.Link>
+            <Nav.Link href="/new-products" className="custom-nav-link">HÀNG MỚI VỀ</Nav.Link>
+            <Nav.Link href="/banchay" className="custom-nav-link">BÁN CHẠY</Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
 
-              <input
-                type="file"
-                ref={fileInputRef}
-                style={{ display: "none" }}
-                accept="image/*"
-                onChange={handleFileSelect}
-              />
-            </div>
-            <div>
-              <p className="text-muted mb-0">Nhấp vào để tải ảnh lên</p>
-              <small className="text-muted">Kích thước tối đa: 5MB</small>
-            </div>
+      {/* Nội dung chính */}
+      <Container className="py-4">
+        {showSuccess && (
+          <div className="alert alert-success">
+            Cập nhật thông tin thành công!
           </div>
+        )}
 
-          <Form onSubmit={handleUpdate}>
-            <Form.Group className="mb-3">
-              <Form.Control
-                type="text"
-                value={userData.fullName}
-                onChange={(e) => handleInputChange("fullName", e.target.value)}
-                placeholder="Họ và tên"
-              />
-            </Form.Group>
+        <div className="bg-white p-4 rounded shadow-sm">
+          <h4 className="mb-4">Thông tin tài khoản</h4>
 
-            <Form.Group className="mb-3">
-              <Form.Control
-                type="email"
-                value={userData.email}
-                disabled
-                className="bg-light"
-              />
-            </Form.Group>
+          <div className="mb-4">
+            <div className="d-flex align-items-center mb-3">
+              <div
+                className="avatar-container me-3"
+                style={{
+                  cursor: "pointer",
+                  position: "relative",
+                  width: "100px",
+                  height: "100px",
+                  borderRadius: "50%",
+                  overflow: "hidden",
+                  backgroundColor: "#f8f9fa",
+                }}
+                onClick={handleAvatarClick}
+              >
+                {avatar ? (
+                  <img
+                    src={avatar}
+                    alt="Avatar"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
+                ) : (
+                  <FaUser
+                    size={50}
+                    className="text-secondary"
+                    style={{
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                    }}
+                  />
+                )}
 
-            <Form.Group className="mb-3">
-              <Form.Control
-                type="text"
-                value={userData.phone}
-                disabled
-                className="bg-light"
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <div className="d-flex">
-                <Form.Check
-                  type="radio"
-                  label="Nam"
-                  name="gender"
-                  checked={userData.gender === "Nam"}
-                  onChange={(e) => handleInputChange("gender", e.target.value)}
-                  className="me-3"
-                />
-                <Form.Check
-                  type="radio"
-                  label="Nữ"
-                  name="gender"
-                  checked={userData.gender === "Nữ"}
-                  onChange={(e) => handleInputChange("gender", e.target.value)}
-                  className="me-3"
-                />
-                <Form.Check
-                  type="radio"
-                  label="Không xác định"
-                  name="gender"
-                  checked={userData.gender === "Không xác định"}
-                  onChange={(e) => handleInputChange("gender", e.target.value)}
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  style={{ display: "none" }}
+                  accept="image/*"
+                  onChange={handleFileSelect}
                 />
               </div>
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label>Ngày sinh (Không bắt buộc)</Form.Label>
-              <Row>
-                <Col>
-                  <Form.Select
-                    value={userData.birthDay}
-                    onChange={(e) =>
-                      handleInputChange("birthDay", e.target.value)
-                    }
-                  >
-                    <option value="">Ngày</option>
-                    {[...Array(31)].map((_, i) => {
-                      const day = (i + 1).toString();
-                      return (
-                        <option key={day} value={day}>
-                          {day}
-                        </option>
-                      );
-                    })}
-                  </Form.Select>
-                </Col>
-                <Col>
-                  <Form.Select
-                    value={userData.birthMonth}
-                    onChange={(e) =>
-                      handleInputChange("birthMonth", e.target.value)
-                    }
-                  >
-                    <option value="">Tháng</option>
-                    {[...Array(12)].map((_, i) => {
-                      const month = (i + 1).toString();
-                      return (
-                        <option key={month} value={month}>
-                          {month}
-                        </option>
-                      );
-                    })}
-                  </Form.Select>
-                </Col>
-                <Col>
-                  <Form.Select
-                    value={userData.birthYear}
-                    onChange={(e) =>
-                      handleInputChange("birthYear", e.target.value)
-                    }
-                  >
-                    <option value="">Năm</option>
-                    {[...Array(100)].map((_, i) => {
-                      const year = (new Date().getFullYear() - i).toString();
-                      return (
-                        <option key={year} value={year}>
-                          {year}
-                        </option>
-                      );
-                    })}
-                  </Form.Select>
-                </Col>
-              </Row>
-            </Form.Group>
-
-            <Button variant="success" type="submit" className="w-100">
-              Cập nhật
-            </Button>
-          </Form>
-        </div>
-
-        <hr />
-
-        <div className="mb-4">
-          <h5>Số điện thoại và Email</h5>
-          <div className="d-flex justify-content-between align-items-center mb-2">
-            <div>
-              <FaPhone className="me-2" />
-              <span>Số điện thoại</span>
-              {isEditingPhone ? (
-                <div className="mt-2">
-                  <Form.Control
-                    type="text"
-                    value={newPhone}
-                    onChange={(e) => {
-                      setNewPhone(e.target.value);
-                      setPhoneError("");
-                    }}
-                    placeholder="Nhập số điện thoại mới"
-                    className="mb-2"
-                  />
-                  {phoneError && (
-                    <div className="text-danger small">{phoneError}</div>
-                  )}
-                  <div className="mt-2">
-                    <Button
-                      variant="success"
-                      size="sm"
-                      onClick={handlePhoneUpdate}
-                      className="me-2"
-                    >
-                      Lưu
-                    </Button>
-                    <Button
-                      variant="light"
-                      size="sm"
-                      onClick={() => {
-                        setIsEditingPhone(false);
-                        setPhoneError("");
-                        setNewPhone(userData.phone);
-                      }}
-                    >
-                      Hủy
-                    </Button>
-                  </div>
-                </div>
-              ) : (
-                <p className="text-muted mb-0">{userData.phone}</p>
-              )}
+              <div>
+                <p className="text-muted mb-0">Nhấp vào để tải ảnh lên</p>
+                <small className="text-muted">Kích thước tối đa: 5MB</small>
+              </div>
             </div>
-            {!isEditingPhone && (
-              <Button
-                variant="light"
-                onClick={() => {
-                  setIsEditingPhone(true);
-                  setNewPhone(userData.phone);
-                }}
-              >
+
+            <Form onSubmit={handleUpdate}>
+              <Form.Group className="mb-3">
+                <Form.Control
+                  type="text"
+                  value={userData.fullName}
+                  onChange={(e) => handleInputChange("fullName", e.target.value)}
+                  placeholder="Họ và tên"
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Control
+                  type="email"
+                  value={userData.email}
+                  disabled
+                  className="bg-light"
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Control
+                  type="text"
+                  value={userData.phone}
+                  disabled
+                  className="bg-light"
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <div className="d-flex">
+                  <Form.Check
+                    type="radio"
+                    label="Nam"
+                    name="gender"
+                    checked={userData.gender === "Nam"}
+                    onChange={(e) => handleInputChange("gender", e.target.value)}
+                    className="me-3"
+                  />
+                  <Form.Check
+                    type="radio"
+                    label="Nữ"
+                    name="gender"
+                    checked={userData.gender === "Nữ"}
+                    onChange={(e) => handleInputChange("gender", e.target.value)}
+                    className="me-3"
+                  />
+                  <Form.Check
+                    type="radio"
+                    label="Không xác định"
+                    name="gender"
+                    checked={userData.gender === "Không xác định"}
+                    onChange={(e) => handleInputChange("gender", e.target.value)}
+                  />
+                </div>
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Ngày sinh (Không bắt buộc)</Form.Label>
+                <Row>
+                  <Col>
+                    <Form.Select
+                      value={userData.birthDay}
+                      onChange={(e) =>
+                        handleInputChange("birthDay", e.target.value)
+                      }
+                    >
+                      <option value="">Ngày</option>
+                      {[...Array(31)].map((_, i) => {
+                        const day = (i + 1).toString();
+                        return (
+                          <option key={day} value={day}>
+                            {day}
+                          </option>
+                        );
+                      })}
+                    </Form.Select>
+                  </Col>
+                  <Col>
+                    <Form.Select
+                      value={userData.birthMonth}
+                      onChange={(e) =>
+                        handleInputChange("birthMonth", e.target.value)
+                      }
+                    >
+                      <option value="">Tháng</option>
+                      {[...Array(12)].map((_, i) => {
+                        const month = (i + 1).toString();
+                        return (
+                          <option key={month} value={month}>
+                            {month}
+                          </option>
+                        );
+                      })}
+                    </Form.Select>
+                  </Col>
+                  <Col>
+                    <Form.Select
+                      value={userData.birthYear}
+                      onChange={(e) =>
+                        handleInputChange("birthYear", e.target.value)
+                      }
+                    >
+                      <option value="">Năm</option>
+                      {[...Array(100)].map((_, i) => {
+                        const year = (new Date().getFullYear() - i).toString();
+                        return (
+                          <option key={year} value={year}>
+                            {year}
+                          </option>
+                        );
+                      })}
+                    </Form.Select>
+                  </Col>
+                </Row>
+              </Form.Group>
+
+              <Button variant="success" type="submit" className="w-100">
                 Cập nhật
               </Button>
-            )}
+            </Form>
           </div>
 
-          <div className="d-flex justify-content-between align-items-center">
-            <div>
-              <FaEnvelope className="me-2" />
-              <span>Email</span>
-              <p className="text-muted mb-0">{userData.email}</p>
+          <hr />
+
+          <div className="mb-4">
+            <h5>Số điện thoại và Email</h5>
+            <div className="d-flex justify-content-between align-items-center mb-2">
+              <div>
+                <FaPhone className="me-2" />
+                <span>Số điện thoại</span>
+                {isEditingPhone ? (
+                  <div className="mt-2">
+                    <Form.Control
+                      type="text"
+                      value={newPhone}
+                      onChange={(e) => {
+                        setNewPhone(e.target.value);
+                        setPhoneError("");
+                      }}
+                      placeholder="Nhập số điện thoại mới"
+                      className="mb-2"
+                    />
+                    {phoneError && (
+                      <div className="text-danger small">{phoneError}</div>
+                    )}
+                    <div className="mt-2">
+                      <Button
+                        variant="success"
+                        size="sm"
+                        onClick={handlePhoneUpdate}
+                        className="me-2"
+                      >
+                        Lưu
+                      </Button>
+                      <Button
+                        variant="light"
+                        size="sm"
+                        onClick={() => {
+                          setIsEditingPhone(false);
+                          setPhoneError("");
+                          setNewPhone(userData.phone);
+                        }}
+                      >
+                        Hủy
+                      </Button>
+                    </div>
+                  </div>
+                ) : (
+                  <p className="text-muted mb-0">{userData.phone}</p>
+                )}
+              </div>
+              {!isEditingPhone && (
+                <Button
+                  variant="light"
+                  onClick={() => {
+                    setIsEditingPhone(true);
+                    setNewPhone(userData.phone);
+                  }}
+                >
+                  Cập nhật
+                </Button>
+              )}
+            </div>
+
+            <div className="d-flex justify-content-between align-items-center">
+              <div>
+                <FaEnvelope className="me-2" />
+                <span>Email</span>
+                <p className="text-muted mb-0">{userData.email}</p>
+              </div>
+            </div>
+          </div>
+
+          <hr />
+
+          <div className="mb-4">
+            <h5>Bảo mật</h5>
+            <div className="d-flex justify-content-between align-items-center">
+              <div>
+                <FaLock className="me-2" />
+                <span>Đổi mật khẩu</span>
+              </div>
+              <Button variant="light">Cập nhật</Button>
+            </div>
+          </div>
+
+          <hr />
+
+          <div>
+            <h5>Liên kết mạng xã hội</h5>
+            <div className="d-flex justify-content-between align-items-center mb-2">
+              <div>
+                <FaFacebook className="me-2 text-primary" />
+                <span>Facebook</span>
+              </div>
+              <Button variant="light">Cập nhật</Button>
+            </div>
+            <div className="d-flex justify-content-between align-items-center">
+              <div>
+                <FaGoogle className="me-2 text-danger" />
+                <span>Google</span>
+              </div>
+              <Button variant="light">Cập nhật</Button>
             </div>
           </div>
         </div>
-
-        <hr />
-
-        <div className="mb-4">
-          <h5>Bảo mật</h5>
-          <div className="d-flex justify-content-between align-items-center">
-            <div>
-              <FaLock className="me-2" />
-              <span>Đổi mật khẩu</span>
-            </div>
-            <Button variant="light">Cập nhật</Button>
-          </div>
-        </div>
-
-        <hr />
-
-        <div>
-          <h5>Liên kết mạng xã hội</h5>
-          <div className="d-flex justify-content-between align-items-center mb-2">
-            <div>
-              <FaFacebook className="me-2 text-primary" />
-              <span>Facebook</span>
-            </div>
-            <Button variant="light">Cập nhật</Button>
-          </div>
-          <div className="d-flex justify-content-between align-items-center">
-            <div>
-              <FaGoogle className="me-2 text-danger" />
-              <span>Google</span>
-            </div>
-            <Button variant="light">Cập nhật</Button>
-          </div>
-        </div>
-      </div>
-    </Container>
+      </Container>
+    </>
   );
 };
 

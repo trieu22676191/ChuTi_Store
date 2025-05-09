@@ -8,12 +8,17 @@ const ChiTietDanhMuc = () => {
   const location = useLocation();
   const { category, name } = location.state || {}; // Nhận cả category và name từ state
   const [products, setProducts] = useState([]);
-  const [sortOption, setSortOption] = useState("bestselling");
+  const [sortOption, setSortOption] = useState("newest"); // Đặt mặc định là "Mới nhất"
   const [showCount, setShowCount] = useState(null);
   const [filterPrice, setFilterPrice] = useState({ min: "", max: "" });
   const [filterBrand, setFilterBrand] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = showCount || 20;
+
+  // Cuộn lên đầu khi trang được tải
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
   useEffect(() => {
     // Fetch sản phẩm theo danh mục
@@ -21,7 +26,7 @@ const ChiTietDanhMuc = () => {
       .then((res) => res.json())
       .then((data) => {
         const filteredProducts = data.filter((product) => product.category === category);
-        filteredProducts.sort((a, b) => b.soldCount - a.soldCount); // Sắp xếp mặc định theo bán chạy
+        filteredProducts.sort((a, b) => b.id - a.id); // Sắp xếp mặc định theo "Mới nhất"
         setProducts(filteredProducts);
       });
   }, [category]);

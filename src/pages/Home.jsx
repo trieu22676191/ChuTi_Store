@@ -253,7 +253,7 @@ const Home = () => {
           <Link to="/huongdandathang" style={{ textDecoration: "none", color: "inherit" }}>
             <img src="/img/Quang Cao/Thanhtoan.png" alt="Thanh toán khi nhận hàng" />
             <div className="service-text">
-              <h5>Thanh toán khi nhận hàng</h5>
+              <h5>Hướng dẫn thanh toán</h5>
             </div>
           </Link>
         </div>

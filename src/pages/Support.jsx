@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaSearch, FaPhone, FaComments } from "react-icons/fa";
+import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
 
 const Support = () => {
   const [keyword, setKeyword] = useState("");
@@ -21,6 +23,31 @@ const Support = () => {
 
   return (
     <>
+      {/* Thêm Navbar ở đây */}
+      <Navbar expand="lg" className="custom-navbar">
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="mx-auto">
+            <Nav.Link
+              href="/"
+              className="custom-nav-link"
+              onClick={(event) => {
+                
+                window.scrollTo({ top: 0, behavior: "smooth" }); // Cuộn lên đầu trang
+              }}
+            >
+              TRANG CHỦ
+            </Nav.Link>
+            <Nav.Link href="/chutideals" className="custom-nav-link">CHUTI DEALS</Nav.Link>
+            <Nav.Link href="/HotDeal" className="custom-nav-link">HOT DEALS</Nav.Link>
+            <Nav.Link href="/brand" className="custom-nav-link">THƯƠNG HIỆU</Nav.Link>
+            <Nav.Link href="/new-products" className="custom-nav-link">HÀNG MỚI VỀ</Nav.Link>
+            <Nav.Link href="/banchay" className="custom-nav-link">BÁN CHẠY</Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
+
+      {/* Nội dung chính */}
       <div
         className="support-header py-4"
         style={{

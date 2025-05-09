@@ -239,32 +239,39 @@ const ChuTiDeals = () => {
       </div>
       <div className="service-support">
         <div className="service-item">
-          <img src="/img/Quang Cao/Thanhtoan.png" alt="Thanh toán khi nhận hàng" />
-          <div className="service-text">
-            <h5>Thanh toán khi nhận hàng</h5>
-
-          </div>
+          <Link to="/huongdandathang" style={{ textDecoration: "none", color: "inherit" }}>
+            <img src="/img/Quang Cao/Thanhtoan.png" alt="Thanh toán khi nhận hàng" />
+            <div className="service-text">
+              <h5>Hướng dẫn thanh toán</h5>
+            </div>
+          </Link>
         </div>
 
         <div className="service-item">
-          <img src="/img/Quang Cao/FreeShip.png" alt="Giao nhanh miễn phí 2H" />
-          <div className="service-text">
-            <h5>Giao nhanh miễn phí 24H</h5>
-          </div>
+          <Link to="/giaonhanh" style={{ textDecoration: "none", color: "inherit" }}>
+            <img src="/img/Quang Cao/FreeShip.png" alt="Giao nhanh miễn phí 2H" />
+            <div className="service-text">
+              <h5>Giao nhanh miễn phí 24H</h5>
+            </div>
+          </Link>
         </div>
 
         <div className="service-item">
-          <img src="/img/Quang Cao/TraHang.png" alt="30 ngày đổi trả miễn phí" />
-          <div className="service-text">
-            <h5>30 ngày đổi trả miễn phí</h5>
-          </div>
+          <Link to="/chinhsachdoitra" style={{ textDecoration: "none", color: "inherit" }}>
+            <img src="/img/Quang Cao/TraHang.png" alt="30 ngày đổi trả miễn phí" />
+            <div className="service-text">
+              <h5>30 ngày đổi trả miễn phí</h5>
+            </div>
+          </Link>
         </div>
 
         <div className="service-item">
-          <img src="/img/Quang Cao/UyTin.png" alt="Thương hiệu uy tín toàn cầu" />
-          <div className="service-text">
-            <h5>Thương hiệu uy tín toàn cầu</h5>
-          </div>
+          <Link to="/gioi-thieu" style={{ textDecoration: "none", color: "inherit" }}>
+            <img src="/img/Quang Cao/UyTin.png" alt="Thương hiệu uy tín toàn cầu" />
+            <div className="service-text">
+              <h5>Thương hiệu uy tín toàn cầu</h5>
+            </div>
+          </Link>
         </div>
 
         <div className="service-item">

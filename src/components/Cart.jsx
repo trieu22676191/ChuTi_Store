@@ -79,20 +79,21 @@ const Cart = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mx-auto">
-            {[
-              "DANH MỤC",
-              "CHUTI DEALS",
-              "HOT DEALS",
-              "THƯƠNG HIỆU",
-              "HÀNG MỚI VỀ",
-              "BÁN CHẠY",
-              "CLINIC & SPA",
-              "DERMAHAIR",
-            ].map((item, index) => (
-              <Nav.Link key={index} href="#" className="custom-nav-link">
-                {item}
-              </Nav.Link>
-            ))}
+            <Nav.Link
+              href="/"
+              className="custom-nav-link"
+              onClick={(event) => {
+                window.scrollTo({ top: 0, behavior: "smooth" }); // Cuộn lên đầu trang
+              }}
+            >
+              TRANG CHỦ
+            </Nav.Link>
+            <Nav.Link href="/chutideals" className="custom-nav-link">CHUTI DEALS</Nav.Link>
+            <Nav.Link href="/HotDeal" className="custom-nav-link">HOT DEALS</Nav.Link>
+            <Nav.Link href="/brand" className="custom-nav-link">THƯƠNG HIỆU</Nav.Link>
+            <Nav.Link href="/new-products" className="custom-nav-link">HÀNG MỚI VỀ</Nav.Link>
+            <Nav.Link href="/banchay" className="custom-nav-link">BÁN CHẠY</Nav.Link>
+
           </Nav>
         </Navbar.Collapse>
       </Navbar>
@@ -255,8 +256,8 @@ const Cart = () => {
                     (sum, item) =>
                       sum +
                       item.quantity *
-                        item.price *
-                        (1 - (item.discount || 0) / 100),
+                      item.price *
+                      (1 - (item.discount || 0) / 100),
                     0
                   )
                   .toLocaleString("vi-VN", {

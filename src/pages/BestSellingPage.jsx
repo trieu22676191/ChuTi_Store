@@ -3,10 +3,11 @@ import '../Css/NewProductsPage.css';
 import SidebarFilter from '../components/SidebarFilter';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
+import { Link, useNavigate } from 'react-router-dom';
 
 const BestSellingPage = () => {
   const [products, setProducts] = useState([]);
-  const [sortOption, setSortOption] = useState('bestselling');
+  const [sortOption, setSortOption] = useState('newest');
   const [showCount, setShowCount] = useState(null);
   const [filterPrice, setFilterPrice] = useState({ min: '', max: '' });
   const [filterBrand, setFilterBrand] = useState('');
@@ -156,19 +157,32 @@ const BestSellingPage = () => {
             </div>
             <div className="product-grid">
               {displayedProducts.map((product) => (
-                <div key={product.id} className="product-card">
-                  <img src={product.image} alt={product.name} />
-                  <h2>{product.name}</h2>
-                  {product.discount > 0 ? (
-                    <>
-                      <span className="discounted-price">{(product.price * (1 - product.discount / 100)).toLocaleString()} đ</span>
-                      <span className="original-price">{product.price.toLocaleString()} đ</span>
-                    </>
-                  ) : (
-                    <span className="discounted-price">{product.price.toLocaleString()} đ</span>
-                  )}
-                  <p>Giảm giá: {product.discount}%</p>
-                </div>
+                <Link
+                  to={{
+                    pathname: `/product/${product.id}`, // Đường dẫn đến trang chi tiết sản phẩm
+                  }}
+                  state={{
+                    product, // Truyền thông tin sản phẩm qua state
+                  }}
+                  key={product.id}
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  <div className="product-card">
+                    <img src={product.image} alt={product.name} />
+                    <h2>{product.name}</h2>
+                    {product.discount > 0 ? (
+                      <>
+                        <span className="discounted-price">
+                          {(product.price * (1 - product.discount / 100)).toLocaleString()} đ
+                        </span>
+                        <span className="original-price">{product.price.toLocaleString()} đ</span>
+                      </>
+                    ) : (
+                      <span className="discounted-price">{product.price.toLocaleString()} đ</span>
+                    )}
+                    <p>Giảm giá: {product.discount}%</p>
+                  </div>
+                </Link>
               ))}
             </div>
             <div style={{marginTop: 16, color: '#555', fontSize: 15}}>
@@ -189,31 +203,34 @@ const BestSellingPage = () => {
             )}
           </div>
         </div>
-        <div className="service-support">
+        <div className="service-support" style={{ display: "flex", flexWrap: "wrap", gap: "16px", justifyContent: "space-between", marginTop: "20px" }}>
           <div className="service-item">
-            <img src="/img/Quang Cao/Thanhtoan.png" alt="Thanh toán khi nhận hàng" />
-            <div className="service-text">
-              <h5>Thanh toán khi nhận hàng</h5>
-            </div>
+            <Link to="/giaonhanh" style={{ textDecoration: "none", color: "inherit" }}>
+              <img src="/img/Quang Cao/FreeShip.png" alt="Giao nhanh miễn phí 2H" />
+              <div className="service-text">
+                <h5>Giao nhanh miễn phí 24H</h5>
+              </div>
+            </Link>
           </div>
+
           <div className="service-item">
-            <img src="/img/Quang Cao/FreeShip.png" alt="Giao nhanh miễn phí 2H" />
-            <div className="service-text">
-              <h5>Giao nhanh miễn phí 24H</h5>
-            </div>
+            <Link to="/chinhsachdoitra" style={{ textDecoration: "none", color: "inherit" }}>
+              <img src="/img/Quang Cao/TraHang.png" alt="30 ngày đổi trả miễn phí" />
+              <div className="service-text">
+                <h5>30 ngày đổi trả miễn phí</h5>
+              </div>
+            </Link>
           </div>
+
           <div className="service-item">
-            <img src="/img/Quang Cao/TraHang.png" alt="30 ngày đổi trả miễn phí" />
-            <div className="service-text">
-              <h5>30 ngày đổi trả miễn phí</h5>
-            </div>
+            <Link to="/gioi-thieu" style={{ textDecoration: "none", color: "inherit" }}>
+              <img src="/img/Quang Cao/UyTin.png" alt="Thương hiệu uy tín toàn cầu" />
+              <div className="service-text">
+                <h5>Thương hiệu uy tín toàn cầu</h5>
+              </div>
+            </Link>
           </div>
-          <div className="service-item">
-            <img src="/img/Quang Cao/UyTin.png" alt="Thương hiệu uy tín toàn cầu" />
-            <div className="service-text">
-              <h5>Thương hiệu uy tín toàn cầu</h5>
-            </div>
-          </div>
+
           <div className="service-item">
             <img src="/img/Quang Cao/HotLine.png" alt="Hotline CSKH" />
             <div className="service-text">
@@ -221,6 +238,7 @@ const BestSellingPage = () => {
               <h5>1800 6324</h5>
             </div>
           </div>
+
           <div className="service-item">
             <img src="/img/Quang Cao/Location.png" alt="Tìm chi nhánh" />
             <div className="service-text">
@@ -234,4 +252,4 @@ const BestSellingPage = () => {
   );
 };
 
-export default BestSellingPage; 
+export default BestSellingPage;

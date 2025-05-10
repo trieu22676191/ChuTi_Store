@@ -17,17 +17,19 @@ const FavoriteProducts = () => {
     const fetchFavorites = async () => {
       setLoading(true);
 
-      // Lấy thông tin người dùng từ localStorage
-      const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
-      const userName = loggedInUser?.fullName;
-
-      if (!userName) {
-        console.error("Không tìm thấy user_name. Vui lòng đăng nhập.");
-        setLoading(false);
-        return;
-      }
-
       try {
+        // Lấy thông tin người dùng từ localStorage
+        const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+
+        if (!loggedInUser || !loggedInUser.name) {
+          console.error("Không tìm thấy user_name. Vui lòng đăng nhập.");
+          setLoading(false);
+          return;
+        }
+
+        const userName = loggedInUser.name;
+
+        // Gửi yêu cầu lấy danh sách yêu thích
         const res = await axios.get(`https://dulieu.onrender.com/likeproduct?user_name=${userName}`);
         setFavorites(res.data);
 
@@ -63,6 +65,15 @@ const FavoriteProducts = () => {
   useEffect(() => {
     const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
     setUserData(loggedInUser);
+  }, []);
+
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("loggedInUser");
+    if (loggedInUser) {
+      console.log("Dữ liệu trong localStorage:", JSON.parse(loggedInUser));
+    } else {
+      console.log("Không tìm thấy loggedInUser trong localStorage.");
+    }
   }, []);
 
   const handleRemove = async (productId) => {

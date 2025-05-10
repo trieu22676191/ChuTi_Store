@@ -748,24 +748,30 @@ const ProductDetail = () => {
       toast.error("Vui lòng đăng nhập");
       return;
     }
-    const name = user.fullName; // hoặc user.userId, tuỳ cấu trúc của bạn
-    const productId = product.id; // hoặc id_SP
 
-    // Kiểm tra đã có trong danh sách yêu thích chưa
-    const res = await axios.get(`https://dulieu.onrender.com/likeproduct?id_user=${name}&id_SP=${productId}`);
-    if (res.data.length > 0) {
-      toast.warning("Sản phẩm đã có trong danh sách yêu thích!");
-      return;
+    const name = user.name; // Tên người dùng
+    const productId = product.id; // ID sản phẩm
+
+    try {
+      // Kiểm tra sản phẩm đã có trong danh sách yêu thích chưa
+      const res = await axios.get(`https://dulieu.onrender.com/likeproduct?id_user=${name}&id_SP=${productId}`);
+      if (res.data.length > 0) {
+        toast.warning("Sản phẩm đã có trong danh sách yêu thích!");
+        return;
+      }
+
+      // Thêm sản phẩm vào danh sách yêu thích
+      await axios.post("https://dulieu.onrender.com/likeproduct", {
+        user_name: name,
+        id_SP: productId,
+        date: new Date().toISOString().slice(0, 10),
+      });
+
+      toast.success("Đã thêm vào danh sách yêu thích!");
+    } catch (error) {
+      console.error("Lỗi khi thêm vào danh sách yêu thích:", error);
+      toast.error("Có lỗi xảy ra, vui lòng thử lại!");
     }
-
-    // Thêm mới
-    await axios.post("https://dulieu.onrender.com/likeproduct", {
-      user_name: name,   // id của user đăng nhập
-      id_SP: productId,       // id sản phẩm
-      date: new Date().toISOString().slice(0, 10)
-    });
-
-    toast.success("Đã thêm vào danh sách yêu thích!");
   };
 
   const handleBuyNow = () => {

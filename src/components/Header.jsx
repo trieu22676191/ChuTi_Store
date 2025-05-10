@@ -237,7 +237,7 @@ const Header = () => {
                       }}
                     >
                       {isLoggedIn
-                        ? `${userData?.fullName || "bạn"}`
+                        ? `${userData?.name || "bạn"}`
                         : "Tài khoản"}
                     </span>
                   </Dropdown.Toggle>

@@ -191,8 +191,8 @@ const MyAccount = () => {
             <Form.Group className="mb-3">
               <Form.Control
                 type="text"
-                value={userData?.fullName || ""}
-                onChange={(e) => handleInputChange("fullName", e.target.value)}
+                value={userData?.name || ""}
+                onChange={(e) => handleInputChange("name", e.target.value)}
                 placeholder="Họ và tên"
               />
             </Form.Group>

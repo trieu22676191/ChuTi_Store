@@ -26,9 +26,8 @@ const tabList = [
 ];
 
 const handleSendQuestion = async () => {
-  // ...
+  
 };
-
 const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -168,7 +167,7 @@ const ProductDetail = () => {
                 Barcode
               </td>
               <td style={{ padding: "10px 16px" }}>
-                {product.barcode || "Đang cập nhật"}
+                {product.barcode || "12345566"}
               </td>
             </tr>
             <tr style={{ borderBottom: "1px solid #eee" }}>
@@ -196,7 +195,7 @@ const ProductDetail = () => {
                 Xuất xứ thương hiệu
               </td>
               <td style={{ padding: "10px 16px" }}>
-                {product.origin || "Đang cập nhật"}
+                {product.brands || "Việt Nam"}
               </td>
             </tr>
             <tr style={{ borderBottom: "1px solid #eee" }}>
@@ -210,7 +209,7 @@ const ProductDetail = () => {
                 Nơi sản xuất
               </td>
               <td style={{ padding: "10px 16px" }}>
-                {product.madeIn || "Đang cập nhật"}
+                {product.madeIn || "USA"}
               </td>
             </tr>
             <tr style={{ borderBottom: "1px solid #eee" }}>
@@ -224,7 +223,7 @@ const ProductDetail = () => {
                 Loại da
               </td>
               <td style={{ padding: "10px 16px" }}>
-                {product.skinType || "Đang cập nhật"}
+                {"Da dầu" || "Đang cập nhật"}
               </td>
             </tr>
             <tr>
@@ -238,7 +237,7 @@ const ProductDetail = () => {
                 Đặc tính
               </td>
               <td style={{ padding: "10px 16px" }}>
-                {product.feature || "Đang cập nhật"}
+                {product.feature || "Cấp ẩm, Chống nắng, Làm sáng da"}
               </td>
             </tr>
           </tbody>
@@ -371,7 +370,7 @@ const ProductDetail = () => {
                     style={{
                       width: reviewStats.total
                         ? (reviewStats.stars[star] / reviewStats.total) * 100 +
-                          "%"
+                        "%"
                         : 0,
                     }}
                   ></div>
@@ -955,7 +954,7 @@ const ProductDetail = () => {
                 margin: "8px 0",
               }}
             >
-              15,000₫ -{" "}
+              {" "}
               {formatPrice(product.price * (1 - product.discount / 100))}
               <span
                 style={{

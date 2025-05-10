@@ -16,7 +16,7 @@ const BestSellingPage = () => {
   const productsPerPage = showCount || 20;
 
   useEffect(() => {
-    fetch('http://localhost:3000/products')
+    fetch('https://dulieu.onrender.com/products')
       .then((response) => response.json())
       .then((data) => {
         // Sắp xếp mặc định theo bán chạy

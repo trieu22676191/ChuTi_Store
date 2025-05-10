@@ -628,14 +628,14 @@ const ProductDetail = () => {
   };
 
   useEffect(() => {
-    fetch(`http://localhost:3000/products/${id}`)
+    fetch(`https://dulieu.onrender.com/products/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setProduct(data);
         setMainImg(data.image);
       });
     // Fetch comments count
-    fetch(`http://localhost:3000/comments?id_SP=${id}`)
+    fetch(`https://dulieu.onrender.com/comments?id_SP=${id}`)
       .then((res) => res.json())
       .then(async (data) => {
         setReviews(data);
@@ -644,7 +644,7 @@ const ProductDetail = () => {
         const userIds = [...new Set(data.map((c) => c.id_User))];
         const userFetches = await Promise.all(
           userIds.map((uid) =>
-            fetch(`http://localhost:3000/users/${uid}`).then((r) => r.json())
+            fetch(`https://dulieu.onrender.com/users/${uid}`).then((r) => r.json())
           )
         );
         const userMap = {};
@@ -665,7 +665,7 @@ const ProductDetail = () => {
         });
       });
     // Fetch questions count và dữ liệu câu hỏi
-    fetch(`http://localhost:3000/questions?id_SP=${id}`)
+    fetch(`https://dulieu.onrender.com/questions?id_SP=${id}`)
       .then((res) => res.json())
       .then(async (data) => {
         setQuestionCount(data.length);
@@ -674,7 +674,7 @@ const ProductDetail = () => {
         const userIds = [...new Set(data.map((q) => q.id_User))];
         const userFetches = await Promise.all(
           userIds.map((uid) =>
-            fetch(`http://localhost:3000/users/${uid}`).then((r) => r.json())
+            fetch(`https://dulieu.onrender.com/users/${uid}`).then((r) => r.json())
           )
         );
         const userMap = {};
@@ -682,7 +682,7 @@ const ProductDetail = () => {
         setQuestionUsers(userMap);
       });
     // Fetch sản phẩm gợi ý (cùng loại, trừ sản phẩm hiện tại)
-    fetch("http://localhost:3000/products")
+    fetch("https://dulieu.onrender.com/products")
       .then((res) => res.json())
       .then((data) => {
         if (product) {
@@ -753,14 +753,14 @@ const ProductDetail = () => {
     const productId = product.id; // hoặc id_SP
 
     // Kiểm tra đã có trong danh sách yêu thích chưa
-    const res = await axios.get(`http://localhost:3000/likeproduct?id_user=${name}&id_SP=${productId}`);
+    const res = await axios.get(`https://dulieu.onrender.com/likeproduct?id_user=${name}&id_SP=${productId}`);
     if (res.data.length > 0) {
       toast.warning("Sản phẩm đã có trong danh sách yêu thích!");
       return;
     }
 
     // Thêm mới
-    await axios.post("http://localhost:3000/likeproduct", {
+    await axios.post("https://dulieu.onrender.com/likeproduct", {
       user_name: name,   // id của user đăng nhập
       id_SP: productId,       // id sản phẩm
       date: new Date().toISOString().slice(0, 10)

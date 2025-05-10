@@ -28,14 +28,14 @@ const FavoriteProducts = () => {
       }
 
       try {
-        const res = await axios.get(`http://localhost:3000/likeproduct?user_name=${userName}`);
+        const res = await axios.get(`https://dulieu.onrender.com/likeproduct?user_name=${userName}`);
         setFavorites(res.data);
 
         if (res.data.length > 0) {
           const userFavorites = res.data.filter(item => item.user_name === userName);
           if (userFavorites.length > 0) {
             const ids = userFavorites.map(item => item.id_SP);
-            const productPromises = ids.map(id => axios.get(`http://localhost:3000/products/${id}`));
+            const productPromises = ids.map(id => axios.get(`https://dulieu.onrender.com/products/${id}`));
             try {
               const productResponses = await Promise.all(productPromises);
               const products = productResponses.map(res => res.data);
@@ -69,7 +69,7 @@ const FavoriteProducts = () => {
     const like = favorites.find(item => item.id_SP === productId);
     if (like) {
       try {
-        await axios.delete(`http://localhost:3000/likeproduct/${like.id}`);
+        await axios.delete(`https://dulieu.onrender.com/likeproduct/${like.id}`);
         setFavorites(favorites.filter(item => item.id_SP !== productId));
         setProducts(products.filter(item => item.id !== productId));
       } catch (error) {

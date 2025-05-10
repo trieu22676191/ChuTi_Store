@@ -16,7 +16,7 @@ const ChiTietHotDeal = () => {
 
   useEffect(() => {
     // Fetch products and categories from db.json
-    fetch("http://localhost:3000/products")
+    fetch("https://dulieu.onrender.com/products")
       .then((res) => res.json())
       .then((data) => {
         const uniqueCategories = ["Tất Cả", ...new Set(data.map((product) => product.category))];

@@ -7,19 +7,19 @@ export default function useFavorite() {
   const [favoriteIds, setFavoriteIds] = useState([]);
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/likeproduct?userId=${userId}`)
+    axios.get(`https://dulieu.onrender.com/likeproduct?userId=${userId}`)
       .then(res => setFavoriteIds(res.data.map(item => item.productId)));
   }, []);
 
   const addFavorite = async (productId) => {
-    await axios.post("http://localhost:3000/likeproduct", { userId, productId });
+    await axios.post("https://dulieu.onrender.com/likeproduct", { userId, productId });
     setFavoriteIds(prev => [...prev, productId]);
   };
 
   const removeFavorite = async (productId) => {
-    const res = await axios.get(`http://localhost:3000/likeproduct?userId=${userId}&productId=${productId}`);
+    const res = await axios.get(`https://dulieu.onrender.com/likeproduct?userId=${userId}&productId=${productId}`);
     if (res.data.length > 0) {
-      await axios.delete(`http://localhost:3000/likeproduct/${res.data[0].id}`);
+      await axios.delete(`https://dulieu.onrender.com/likeproduct/${res.data[0].id}`);
       setFavoriteIds(prev => prev.filter(id => id !== productId));
     }
   };

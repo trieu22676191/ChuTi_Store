@@ -27,7 +27,7 @@ const MyAccount = () => {
       return;
     }
 
-    fetch(`http://localhost:3000/users/${loggedInUser.id}`)
+    fetch(`https://dulieu.onrender.com/users/${loggedInUser.id}`)
       .then((res) => res.json())
       .then((data) => {
         setUserData(data);
@@ -67,7 +67,7 @@ const MyAccount = () => {
     e.preventDefault();
     try {
       const updatedUser = { ...userData, avatar };
-      await fetch(`http://localhost:3000/users/${userData.id}`, {
+      await fetch(`https://dulieu.onrender.com/users/${userData.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -90,7 +90,7 @@ const MyAccount = () => {
     }
 
     try {
-      const res = await fetch("http://localhost:3000/users");
+      const res = await fetch("https://dulieu.onrender.com/users");
       const allUsers = await res.json();
       const phoneExists = allUsers.some(
         (acc) => acc.sdt === newPhone && acc.id !== userData.id
@@ -101,7 +101,7 @@ const MyAccount = () => {
       }
 
       const updated = { ...userData, sdt: newPhone };
-      await fetch(`http://localhost:3000/users/${userData.id}`, {
+      await fetch(`https://dulieu.onrender.com/users/${userData.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

@@ -31,7 +31,7 @@ const Login = ({ show, handleClose, handleShowSignup, onLoginSuccess, onForgotPa
     setError({ emailOrPhone: "", password: "", general: "" });
 
     try {
-      const res = await fetch("http://localhost:3000/users");
+      const res = await fetch("https://dulieu.onrender.com/users");
       const users = await res.json();
 
       const matchedUser = users.find(

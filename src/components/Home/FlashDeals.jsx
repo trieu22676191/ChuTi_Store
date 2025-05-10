@@ -18,7 +18,7 @@ const FlashDeals = () => {
 
   useEffect(() => {
     // Fetch products from json-server
-    fetch('http://localhost:3000/products')
+    fetch('https://dulieu.onrender.com/products')
       .then(res => res.json())
       .then(data => {
         // Lấy ngẫu nhiên 10 sản phẩm cho flash deals

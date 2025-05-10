@@ -20,7 +20,7 @@ const MyOrder = () => {
     const fetchOrders = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch("http://localhost:3000/orders");
+        const response = await fetch("https://dulieu.onrender.com/orders");
         const data = await response.json();
         setOrders(data);
       } catch (error) {
@@ -47,7 +47,7 @@ const MyOrder = () => {
 
       const updatedOrder = { ...orderToCancel, status: "cancelled" };
 
-      const response = await fetch(`http://localhost:3000/orders/${orderId}`, {
+      const response = await fetch(`https://dulieu.onrender.com/orders/${orderId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedOrder),

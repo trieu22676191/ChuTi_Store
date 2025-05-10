@@ -137,7 +137,7 @@ const Signup = ({ show, handleClose, handleShowLogin }) => {
     };
 
     try {
-      await fetch("http://localhost:3000/users", {
+      await fetch("https://dulieu.onrender.com/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

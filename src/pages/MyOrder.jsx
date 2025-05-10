@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Container, Nav, Card } from "react-bootstrap";
-import Navbar from "react-bootstrap/Navbar";
 
 const MyOrder = () => {
   const [activeTab, setActiveTab] = useState("all");
@@ -18,10 +17,20 @@ const MyOrder = () => {
 
   useEffect(() => {
     // Fetch dữ liệu orders từ API
-    fetch("http://localhost:3000/orders")
-      .then((response) => response.json())
-      .then((data) => setOrders(data))
-      .catch((error) => console.error("Error:", error));
+    const fetchOrders = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch("http://localhost:3000/orders");
+        const data = await response.json();
+        setOrders(data);
+      } catch (error) {
+        console.error("Error:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchOrders();
   }, []);
 
   // Lọc orders theo tab đang active
@@ -33,7 +42,6 @@ const MyOrder = () => {
   const handleCancelOrder = async (orderId) => {
     setIsLoading(true);
     try {
-      // orderId giờ là string
       const orderToCancel = orders.find((order) => order.id === orderId);
       if (!orderToCancel) throw new Error("Không tìm thấy đơn hàng");
 
@@ -63,63 +71,44 @@ const MyOrder = () => {
   };
 
   return (
-    <>
-      {/* Thêm Navbar ở đây */}
-      <Navbar expand="lg" className="custom-navbar">
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mx-auto">
+    <Container className="py-4">
+      <div className="d-flex align-items-center mb-4">
+        <h5 className="mb-0 me-4">Đơn hàng của tôi</h5>
+      </div>
+
+      <Nav className="border-bottom mb-4">
+        {tabs.map((tab) => (
+          <Nav.Item key={tab.id}>
             <Nav.Link
-              href="/"
-              className="custom-nav-link"
-              onClick={(event) => {
-                window.scrollTo({ top: 0, behavior: "smooth" }); // Cuộn lên đầu trang
-              }}
+              className={`border-0 ${
+                activeTab === tab.id
+                  ? "text-primary border-bottom border-primary"
+                  : "text-secondary"
+              }`}
+              onClick={() => setActiveTab(tab.id)}
             >
-              TRANG CHỦ
+              {tab.label}
             </Nav.Link>
-            <Nav.Link href="/chutideals" className="custom-nav-link">CHUTI DEALS</Nav.Link>
-            <Nav.Link href="/HotDeal" className="custom-nav-link">HOT DEALS</Nav.Link>
-            <Nav.Link href="/brand" className="custom-nav-link">THƯƠNG HIỆU</Nav.Link>
-            <Nav.Link href="/new-products" className="custom-nav-link">HÀNG MỚI VỀ</Nav.Link>
-            <Nav.Link href="/banchay" className="custom-nav-link">BÁN CHẠY</Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
+          </Nav.Item>
+        ))}
+      </Nav>
 
-      {/* Nội dung chính */}
-      <Container className="py-4">
-        <div className="d-flex align-items-center mb-4">
-          <h5 className="mb-0 me-4">Đơn hàng của tôi</h5>
-        </div>
-
-        <Nav className="border-bottom mb-4">
-          {tabs.map((tab) => (
-            <Nav.Item key={tab.id}>
-              <Nav.Link
-                className={`border-0 ${
-                  activeTab === tab.id
-                    ? "text-primary border-bottom border-primary"
-                    : "text-secondary"
-                }`}
-                onClick={() => setActiveTab(tab.id)}
-              >
-                {tab.label}
-              </Nav.Link>
-            </Nav.Item>
-          ))}
-        </Nav>
-
-        {/* Hiển thị danh sách đơn hàng */}
-        <div>
-          {filteredOrders.map((order) => (
+      {/* Hiển thị danh sách đơn hàng */}
+      <div>
+        {isLoading ? (
+          <p>Đang tải đơn hàng...</p>
+        ) : filteredOrders.length === 0 ? (
+          <p className="text-center text-muted">Không có đơn hàng nào.</p>
+        ) : (
+          filteredOrders.map((order) => (
             <Card key={order.id} className="mb-3">
               <Card.Body>
                 <div className="d-flex justify-content-between align-items-center mb-3">
                   <div>
                     <h6 className="mb-1">Đơn hàng #{order.orderCode}</h6>
                     <small className="text-muted">
-                      Ngày đặt: {new Date(order.date).toLocaleDateString("vi-VN")}
+                      Ngày đặt:{" "}
+                      {new Date(order.date).toLocaleDateString("vi-VN")}
                     </small>
                   </div>
                   <div className="text-end">
@@ -147,7 +136,10 @@ const MyOrder = () => {
 
                 {/* Hiển thị danh sách sản phẩm */}
                 {order.items.map((item, index) => (
-                  <div key={index} className="d-flex align-items-center mb-2">
+                  <div
+                    key={index}
+                    className="d-flex align-items-center mb-2"
+                  >
                     <img
                       src={item.image}
                       alt={item.name}
@@ -168,10 +160,10 @@ const MyOrder = () => {
                 ))}
               </Card.Body>
             </Card>
-          ))}
-        </div>
-      </Container>
-    </>
+          ))
+        )}
+      </div>
+    </Container>
   );
 };
 

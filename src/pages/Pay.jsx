@@ -156,6 +156,9 @@ const Pay = () => {
       );
       localStorage.setItem("cart", JSON.stringify(updatedCart));
 
+      // Xóa `selectedItems` khỏi state và localStorage
+      localStorage.removeItem("selectedItems");
+
       // Hiển thị thông báo thành công
       setShowToast(true);
 
